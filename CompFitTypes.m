@@ -19,9 +19,6 @@ meanNodeDist = mean(NodeDist);
 
 Clo = closeness_bin(adj{1},1)';
 
-%G = communicability(A);
-GlobalA = [efficiency_bin(A) diffusion_efficiency(A) modularity_Q(A) transitivity_bu(A)];
-
 A_vals{1} = sum(A,2);
 A_vals{2} = clustering_coef_bu(A);
 A_vals{3} = betweenness_bin(A)';

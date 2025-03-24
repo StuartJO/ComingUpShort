@@ -11,10 +11,6 @@ adjs = mdldata.adj;
 
 Input.NNodes = length(A_dist);
 
-%load('randScha200data.mat')
-%MdlPDMs{1} = R;
-%MdlPDMs{2} = Rsum;
-
 load('Scha400_SArand.mat','C')
 MdlPDMs{1} = 1-C;
 n = 2;

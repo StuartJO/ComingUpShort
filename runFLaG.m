@@ -1,4 +1,4 @@
-function runFLaG(MDL,ADDMULT,LAW,TIMING)
+function runFLaG(MDL,ADDMULT,LAW)
 
 addpath(genpath('./'))
 
@@ -110,17 +110,14 @@ elseif i == 10
     end
 
 end
-    for l = TIMING
     
     disp(['Running model EmpFLaG_Mdl',num2str(i),'_',AddMult,'_',Input.PDMfunc{1}])  
-    
-    Input.Timing = 0;
     Input.SaveName_temp = ['EmpFLaG_Mdl',num2str(i),'_',AddMult,'_',Input.PDMfunc{1},'_temp.mat'];
-    %Output = GenMdl_Timing(adjs{1},A_dist,PDMs,Input);
+
     Output = GenMdlFast_FLaG2(THR,A_dist,PDMs,Input);
     Output.PDMs = PDMs;
     save(['EmpFLaG_Mdl',num2str(i),'_',AddMult,'_',Input.PDMfunc{1},'.mat'],'-struct','Output','-v7.3')
-    end
+
 end
 
 end
