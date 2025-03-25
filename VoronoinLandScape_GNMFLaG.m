@@ -1,4 +1,4 @@
-function [maxKS,KS,P,b,DegCorr,Input,bvals] = VoronoinLandScape_VaryParamFLaG(adjs,A_dist,PDMs,m,Input)
+function [maxKS,KS,P,b,DegCorr,Input,bvals] = VoronoinLandScape_GNMFLaG(adjs,A_dist,PDMs,m,Input)
 
 % This function will perform optimisation using a Voronoi tessellation
 % approach, where from an initial set of random points in parameter space,
@@ -252,7 +252,7 @@ for ilvl = 1:nlvl
         B_vals_temp = cell(ndraw,n_sub);
 
         parfor i = 1:ndraw          
-                [~, btemp{i}] = GenMdlVaryParam(PDMs,ptsnew(i,:),m,Input); 
+                [~, btemp{i}] = GNM(PDMs,ptsnew(i,:),m,Input); 
                   
                 if SpeedUp
                 b_vals = cell(1,4); 
@@ -306,7 +306,7 @@ for ilvl = 1:nlvl
         B_vals_temp = cell(ndraw,n_sub);
 
         for i = 1:ndraw          
-                [~, btemp{i}] = GenMdlVaryParam(PDMs,ptsnew(i,:),m,Input); 
+                [~, btemp{i}] = GNM(PDMs,ptsnew(i,:),m,Input); 
                   
                 if SpeedUp
                 b_vals = cell(1,4); 

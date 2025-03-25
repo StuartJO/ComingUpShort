@@ -8,8 +8,6 @@ load('Scha400_7_lh_Thr70.mat')
 
 A_dist = mdldata.A_dist;
 
-Input.NNodes = length(A_dist);
-
 MdlPDMs = mdldata.hansen_maps;
 
 for i = 1:length(mdldata.hansen_maps)
@@ -20,9 +18,9 @@ nHansen = length(mdldata.hansen_maps);
 load('Scha400_SArand.mat','C');
 MdlPDMs{nHansen+1} = 1-C;
 
+Input.NNodes = length(A_dist);
 Input.useParfor = 0;
 Input.ndraw = 2000;
-
 Input.pow = 2;
 Input.nlvl = 5;
 
@@ -117,6 +115,8 @@ end
     Output = GenMdlFast_FLaG2(THR,A_dist,PDMs,Input);
     Output.PDMs = PDMs;
     save(['EmpFLaG_Mdl',num2str(i),'_',AddMult,'_',Input.PDMfunc{1},'.mat'],'-struct','Output','-v7.3')
+
+    Input.PDMfunc = [];
 
 end
 

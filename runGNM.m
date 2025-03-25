@@ -40,8 +40,8 @@ for k = ADDMULT
     end
 
     Input.AddMult = AddMult;
-
-    for i = MDL
+    
+for i = MDL
     clear PDMs
     
     PDMs{1} = A_dist;
@@ -51,7 +51,7 @@ for k = ADDMULT
     end
     n = length(PDMs);
 
-for j = LAW
+    for j = LAW
 
         if i == 1
         

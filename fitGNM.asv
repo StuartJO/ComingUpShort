@@ -363,7 +363,7 @@ MdlOutput.BestFit.maxKS.maxKS = optim_maxKS;
 MdlOutput.BestFit.maxKS.KS = optim_KS;
 MdlOutput.BestFit.maxKS.b = optim_b;
 MdlOutput.BestFit.maxKS.DegCorr = optim_DegCorr;
-MdlOutput.BestFit.maxKS.P = P_optim;
+MdlOutput.BestFit.maxKS.P = optim_DegCorr;
 
 MdlOutput.BestFit.maxKS.meanProb = mean(optim_meanProb);
 MdlOutput.BestFit.maxKS.medianProb = mean(optim_medianProb);
@@ -372,7 +372,6 @@ MdlOutput.BestFit.DegCorr.maxKS = bestDegCorr_maxKS;
 MdlOutput.BestFit.DegCorr.KS = bestDegCorr_KS;
 MdlOutput.BestFit.DegCorr.b = bestDegCorr_b;
 MdlOutput.BestFit.DegCorr.DegCorr = bestDegCorr_DegCorr;
-MdlOutput.BestFit.DegCorr.P = bestDegCorr_P;
 
 MdlOutput.BestFit.DegCorr.meanProb = mean(bestDegCorr_meanProb);
 MdlOutput.BestFit.DegCorr.medianProb = mean(bestDegCorr_medianProb);

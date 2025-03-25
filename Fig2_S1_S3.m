@@ -45,8 +45,8 @@ MdlDeg = zeros(NMdls,200);
 cmap = [0.5 0.5 0.5; lines(7); 0.6941 0.3490 0.1569; [251,154,153]./255];
 cmap_alpha = make_alpha_rgb(cmap,.5);
 
-    for form = 0:1
-        for law = 0:1
+    for form = 1
+        for law = 1
 
             if form == 0
                 AddMult = 'Mult';
@@ -67,7 +67,7 @@ for mdlIND = 1:NMdls
 if mdl == 8
 Output = load(['Hansen_Timing_0_RandMdl',num2str(1),'_',AddMult,'_',LAW,'.mat']);
 elseif mdl == 9
-    Output = load(['Hansen_Timing_0_TopoMdl_',num2str(1),'_',AddMult,'_',LAW,'.mat']);
+    Output = load(['Hansen_Timing_0_TopoMdl_',num2str(2),'_',AddMult,'_',LAW,'.mat']);
 else
 Output = load(['Hansen_Timing_0_Mdl',num2str(mdl),'_',AddMult,'_',LAW,'.mat']);
 end

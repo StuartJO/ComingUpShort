@@ -1,4 +1,4 @@
-function MdlOutput = GenMdlFast_FLaG2(adjs,A_dist,PDMs,Input)
+function MdlOutput = fitGNM_FLaG(adjs,A_dist,PDMs,Input)
 
 % This function runs the generative model optimisation. 
 % The model has the following basic form for defining connection probabilities:
@@ -205,11 +205,9 @@ m = max(adjs_m);
 
 n = length(A_dist);
 
-%save('ERRORtest.mat')
-
 if ~exist(Input.SaveName_temp,'file')
 disp('Running model!')
-[maxKS,KS,P,b,DegCorr,Input,bvals] = VoronoinLandScape_VaryParamFLaG(adjs,A_dist,PDMs,m,Input);
+[maxKS,KS,P,b,DegCorr,Input,bvals] = VoronoinLandScape_GNMFLaG(adjs,A_dist,PDMs,m,Input);
 
 MdlOutput.maxKS = maxKS;
 MdlOutput.DegCorr = DegCorr;
@@ -289,10 +287,8 @@ end
 
 end
 
-
 [~,I] = min(mean(maxKS,2));     
 optim_P = P(I,:);
-
 
 if Input.GenFromBest>0
 
@@ -306,7 +302,7 @@ optim_DegCorr = zeros(NGenFromBest,n_subs);
 
 if Input.useParfor
     for k = 1:NGenFromBest
-        [~,optim_b{k}] = fastGenMdl_simMats(PDMs,optim_P,PDMfunc,m,'max',AddMult);
+        [~,optim_b{k}] = GNM(PDMs,optim_P,m,Input);
         
         parfor i = 1:n_subs
             B = zeros(n);
@@ -318,7 +314,7 @@ if Input.useParfor
     end   
 else
     for k = 1:NGenFromBest
-        [~,optim_b{k}] = fastGenMdl_simMats(PDMs,optim_P,PDMfunc,m,'max',AddMult);
+        [~,optim_b{k}] = GNM(PDMs,optim_P,m,Input);
         for i = 1:n_subs
             B = zeros(n);
             B(optim_b{k}(1:adjs_m(i))) = 1;
@@ -339,7 +335,7 @@ bestDegCorr_DegCorr = zeros(NGenFromBest,n_subs);
 
 if Input.useParfor
     for k = 1:NGenFromBest
-        [~,bestDegCorr_b{k}] = fastGenMdl_simMats(PDMs,bestDegCorr_P,PDMfunc,m,'max',AddMult);
+        [~,bestDegCorr_b{k}] = GNM(PDMs,bestDegCorr_P,m,Input);
         
         parfor i = 1:n_subs
             B = zeros(n);
@@ -351,7 +347,7 @@ if Input.useParfor
     end   
 else
     for k = 1:NGenFromBest
-        [~,bestDegCorr_b{k}] = fastGenMdl_simMats(PDMs,bestDegCorr_P,PDMfunc,m,'max',AddMult);
+        [~,bestDegCorr_b{k}] = GNM(PDMs,bestDegCorr_P,m,Input);
         for i = 1:n_subs
             B = zeros(n);
             B(bestDegCorr_b{k}(1:adjs_m(i))) = 1;
@@ -362,17 +358,17 @@ else
     end     
 end
        
-MdlOutput.optim_maxKS = optim_maxKS;
-MdlOutput.optim_KS = optim_KS;
-MdlOutput.optim_b = optim_b;
-MdlOutput.optim_DegCorr = optim_DegCorr;
-MdlOutput.optim_P = optim_P;
+MdlOutput.BestFit.maxKS.maxKS = optim_maxKS;
+MdlOutput.BestFit.maxKS.KS = optim_KS;
+MdlOutput.BestFit.maxKS.b = optim_b;
+MdlOutput.BestFit.maxKS.DegCorr = optim_DegCorr;
+MdlOutput.BestFit.maxKS.P = optim_P;
 
-MdlOutput.bestDegCorr_maxKS = bestDegCorr_maxKS;
-MdlOutput.bestDegCorr_KS = bestDegCorr_KS;
-MdlOutput.bestDegCorr_b = bestDegCorr_b;
-MdlOutput.bestDegCorr_DegCorr = bestDegCorr_DegCorr;
-MdlOutput.bestDegCorr_P = bestDegCorr_P;
+MdlOutput.BestFit.Deg.maxKS = bestDegCorr_maxKS;
+MdlOutput.BestFit.Deg.KS = bestDegCorr_KS;
+MdlOutput.BestFit.Deg.b = bestDegCorr_b;
+MdlOutput.BestFit.Deg.DegCorr = bestDegCorr_DegCorr;
+MdlOutput.BestFit.Deg.P = bestDegCorr_P;
 
 end
 
