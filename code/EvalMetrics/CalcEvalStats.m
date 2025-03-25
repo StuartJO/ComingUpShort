@@ -1,4 +1,4 @@
-function [maxKS,EdgeOverlap,TND,maxRMSE,rd,TFdiff,TFdiffnc,TopoCorrs,RMSE] = CalcEvalStats(A,B,ANetStats,BNetStats,AvgMean)
+function [maxKS,EdgeOverlap,TND,maxRMSE,maxRd,TFdiff,TFdiffnc,TopoCorrs,RMSE] = CalcEvalStats(A,B,ANetStats,BNetStats,AvgMean)
 
 %% Get maxKS
 
@@ -59,7 +59,7 @@ for i = 1:5
     TopoCorrs(i) = corr(ANetStats.NodeMeasures(:,i),BNetStats.NodeMeasures(:,i));
 end
 
-rd = 1-min(TopoCorrs([1 2 4 5]));
+maxRd = 1-min(TopoCorrs([1 2 4 5]));
 
 %% Get TFdiff
 

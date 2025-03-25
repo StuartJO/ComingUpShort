@@ -28,7 +28,7 @@ MdlOutput.TFdiffnc = FitMetricsOutput.TFdiff_no_c;
 
 MdlOutput.TND = pdist2(FitMetricsOutput.TopoGlobal,ANetStats4Eval.GlobalTopo);
 
-MdlOutput.rd = 1-min(FitMetricsOutput.TopogCorr,[],2);
+MdlOutput.maxRd = 1-min(FitMetricsOutput.TopogCorr,[],2);
 
 MdlOutput.maxRMSE = max(FitMetricsOutput.RMSE(:,1:4),[],2);
 
@@ -110,14 +110,14 @@ MdlOutput.BestFit.DegCorr.medianProb = Output.bestDegCorr_medianProb;
 MdlOutput.BestFit.maxKS.EdgeOverlap = optim_EdgeOverlap;
 MdlOutput.BestFit.maxKS.TND = optim_TND;
 MdlOutput.BestFit.maxKS.maxRMSE = optim_maxRMSE;
-MdlOutput.BestFit.maxKS.rd = optim_rd;
+MdlOutput.BestFit.maxKS.maxRd = optim_rd;
 MdlOutput.BestFit.maxKS.TFdiff = optim_TFdiff;
 MdlOutput.BestFit.maxKS.TFdiffnc = optim_TFdiffnc;
 
 MdlOutput.BestFit.DegCorr.EdgeOverlap = bestDegCorr_EdgeOverlap;
 MdlOutput.BestFit.DegCorr.TND = bestDegCorr_TND;
 MdlOutput.BestFit.DegCorr.maxRMSE = bestDegCorr_maxRMSE;
-MdlOutput.BestFit.DegCorr.rd = bestDegCorr_rd;
+MdlOutput.BestFit.DegCorr.maxRd = bestDegCorr_rd;
 MdlOutput.BestFit.DegCorr.TFdiff = bestDegCorr_TFdiff;
 MdlOutput.BestFit.DegCorr.TFdiffnc = bestDegCorr_TFdiffnc;
 

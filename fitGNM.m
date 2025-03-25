@@ -218,7 +218,7 @@ nNets = length(b);
 MdlOutput.EdgeOverlap = zeros(nNets,4);
 MdlOutput.TND = zeros(nNets,1);
 MdlOutput.maxRMSE = zeros(nNets,1);
-MdlOutput.rd = zeros(nNets,1);
+MdlOutput.maxRd = zeros(nNets,1);
 MdlOutput.TFdiff = zeros(nNets,1);
 MdlOutput.TFdiffnc = zeros(nNets,1);
 
@@ -230,7 +230,7 @@ for i = 1:nNets
     B(b{i})=1;
     B = B + B';
     bNetStats4Eval = CalcNetStats4Eval(B,A_dist);
-    [~,EdgeOverlap,MdlOutput.TND(i),MdlOutput.maxRMSE(i),MdlOutput.rd(i),MdlOutput.TFdiff(i),MdlOutput.TFdiffnc(i)] = CalcEvalStats(A,B,ANetStats4Eval,bNetStats4Eval,0);
+    [~,EdgeOverlap,MdlOutput.TND(i),MdlOutput.maxRMSE(i),MdlOutput.maxRd(i),MdlOutput.TFdiff(i),MdlOutput.TFdiffnc(i)] = CalcEvalStats(A,B,ANetStats4Eval,bNetStats4Eval,0);
     MdlOutput.EdgeOverlap(i,:) = EdgeOverlap;
 end
 
@@ -259,7 +259,7 @@ optim_medianProb = zeros(nGenFromBest,nPossEdges);
 optim_EdgeOverlap = zeros(nGenFromBest, 4);  % Adjust size if known
 optim_TND = zeros(nGenFromBest, 1);         % TND likely scalar per iteration
 optim_maxRMSE = zeros(nGenFromBest, 1);     % maxRMSE likely scalar per iteration
-optim_rd = zeros(nGenFromBest, 1);          % rd likely scalar per iteration
+optim_maxRd = zeros(nGenFromBest, 1);          % rd likely scalar per iteration
 optim_TFdiff = zeros(nGenFromBest, 1);      % TFdiff likely scalar per iteration
 optim_TFdiffnc = zeros(nGenFromBest, 1);    % TFdiffnc likely scalar per iteration
 
@@ -279,7 +279,7 @@ if Input.useParfor
         optim_medianProb(k,:) = nanmedian(MdlProbsNans);
 
         bNetStats4Eval = CalcNetStats4Eval(B,A_dist);
-        [~,optim_EdgeOverlap(k,:),optim_TND(k),optim_maxRMSE(k),optim_rd(k),optim_TFdiff(k),optim_TFdiffnc(k)] = CalcEvalStats(A,B,ANetStats4Eval,bNetStats4Eval,0);
+        [~,optim_EdgeOverlap(k,:),optim_TND(k),optim_maxRMSE(k),optim_maxRd(k),optim_TFdiff(k),optim_TFdiffnc(k)] = CalcEvalStats(A,B,ANetStats4Eval,bNetStats4Eval,0);
 
     end   
 else
@@ -297,7 +297,7 @@ else
         optim_medianProb(k,:) = nanmedian(MdlProbsNans);
 
         bNetStats4Eval = CalcNetStats4Eval(B,A_dist);
-        [~,optim_EdgeOverlap(k,:),optim_TND(k),optim_maxRMSE(k),optim_rd(k),optim_TFdiff(k),optim_TFdiffnc(k)] = CalcEvalStats(A,B,ANetStats4Eval,bNetStats4Eval,0);
+        [~,optim_EdgeOverlap(k,:),optim_TND(k),optim_maxRMSE(k),optim_maxRd(k),optim_TFdiff(k),optim_TFdiffnc(k)] = CalcEvalStats(A,B,ANetStats4Eval,bNetStats4Eval,0);
     end     
 end
 
@@ -316,7 +316,7 @@ bestDegCorr_medianProb = zeros(100,nPossEdges);
 bestDegCorr_EdgeOverlap = zeros(nGenFromBest, 4);  % Adjust size if known
 bestDegCorr_TND = zeros(nGenFromBest, 1);         % TND likely scalar per iteration
 bestDegCorr_maxRMSE = zeros(nGenFromBest, 1);     % maxRMSE likely scalar per iteration
-bestDegCorr_rd = zeros(nGenFromBest, 1);          % rd likely scalar per iteration
+bestDegCorr_maxRd = zeros(nGenFromBest, 1);          % rd likely scalar per iteration
 bestDegCorr_TFdiff = zeros(nGenFromBest, 1);      % TFdiff likely scalar per iteration
 bestDegCorr_TFdiffnc = zeros(nGenFromBest, 1);    % TFdiffnc likely scalar per iteration
 
@@ -335,7 +335,7 @@ if Input.useParfor
         bestDegCorr_meanProb(k,:) = nanmean(MdlProbsNans);
         bestDegCorr_medianProb(k,:) = nanmedian(MdlProbsNans);
         bNetStats4Eval = CalcNetStats4Eval(B,A_dist);
-        [~,bestDegCorr_EdgeOverlap(k,:),bestDegCorr_TND(k),bestDegCorr_maxRMSE(k),bestDegCorr_rd(k),bestDegCorr_TFdiff(k),bestDegCorr_TFdiffnc(k)] = CalcEvalStats(A,B,ANetStats4Eval,bNetStats4Eval,0);
+        [~,bestDegCorr_EdgeOverlap(k,:),bestDegCorr_TND(k),bestDegCorr_maxRMSE(k),bestDegCorr_maxRd(k),bestDegCorr_TFdiff(k),bestDegCorr_TFdiffnc(k)] = CalcEvalStats(A,B,ANetStats4Eval,bNetStats4Eval,0);
     end 
 
 else
@@ -353,7 +353,7 @@ else
         bestDegCorr_meanProb(k,:) = nanmean(MdlProbsNans);
         bestDegCorr_medianProb(k,:) = nanmedian(MdlProbsNans);
         bNetStats4Eval = CalcNetStats4Eval(B,A_dist);
-        [~,bestDegCorr_EdgeOverlap(k,:),bestDegCorr_TND(k),bestDegCorr_maxRMSE(k),bestDegCorr_rd(k),bestDegCorr_TFdiff(k),bestDegCorr_TFdiffnc(k)] = CalcEvalStats(A,B,ANetStats4Eval,bNetStats4Eval,0);
+        [~,bestDegCorr_EdgeOverlap(k,:),bestDegCorr_TND(k),bestDegCorr_maxRMSE(k),bestDegCorr_maxRd(k),bestDegCorr_TFdiff(k),bestDegCorr_TFdiffnc(k)] = CalcEvalStats(A,B,ANetStats4Eval,bNetStats4Eval,0);
 
     end  
 
@@ -380,14 +380,14 @@ MdlOutput.BestFit.DegCorr.medianProb = mean(bestDegCorr_medianProb);
 MdlOutput.BestFit.maxKS.EdgeOverlap = optim_EdgeOverlap;
 MdlOutput.BestFit.maxKS.TND = optim_TND;
 MdlOutput.BestFit.maxKS.maxRMSE = optim_maxRMSE;
-MdlOutput.BestFit.maxKS.rd = optim_rd;
+MdlOutput.BestFit.maxKS.maxRd = optim_maxRd;
 MdlOutput.BestFit.maxKS.TFdiff = optim_TFdiff;
 MdlOutput.BestFit.maxKS.TFdiffnc = optim_TFdiffnc;
 
 MdlOutput.BestFit.DegCorr.EdgeOverlap = bestDegCorr_EdgeOverlap;
 MdlOutput.BestFit.DegCorr.TND = bestDegCorr_TND;
 MdlOutput.BestFit.DegCorr.maxRMSE = bestDegCorr_maxRMSE;
-MdlOutput.BestFit.DegCorr.rd = bestDegCorr_rd;
+MdlOutput.BestFit.DegCorr.maxRd = bestDegCorr_maxRd;
 MdlOutput.BestFit.DegCorr.TFdiff = bestDegCorr_TFdiff;
 MdlOutput.BestFit.DegCorr.TFdiffnc = bestDegCorr_TFdiffnc;
 
