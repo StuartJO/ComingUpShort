@@ -1,6 +1,6 @@
 FitType = 'maxKS';
 
-mkdir(['./figures/Plot1/',FitType])
+%mkdir(['./figures/Plot1/',FitType])
 
 mdldata = load('Hansen_networks.mat');
 
@@ -25,20 +25,8 @@ mdls = 0:9;
 
 NMdls = length(mdls);
 
-MdlFit = zeros(NMdls,100,1);
-DegCorr = zeros(NMdls,100,1);
-EdgeOverlap = zeros(NMdls,100,4);
-EdgeProp = zeros(NMdls,100,4);
-Edge_pdf = zeros(100,length(0:160),NMdls);
-BinTest = zeros(NMdls,100,5);
-
-
-MdlEdges = zeros(NMdls,length(d));
-
-f = zeros(NMdls,length(d));
-Eta = zeros(NMdls,1);
-Gam = zeros(NMdls,1);
-Alpha = zeros(NMdls,1);
+MdlFit = zeros(NMdls,100);
+DegCorr = zeros(NMdls,100);
 
 MdlDeg = zeros(NMdls,200);
 
@@ -64,41 +52,19 @@ cmap_alpha = make_alpha_rgb(cmap,.5);
 
 for mdlIND = 1:NMdls
     mdl = mdls(mdlIND);
-if mdl == 8
-Output = load(['Hansen_Timing_0_RandMdl',num2str(1),'_',AddMult,'_',LAW,'.mat']);
-elseif mdl == 9
-    Output = load(['Hansen_Timing_0_TopoMdl_',num2str(2),'_',AddMult,'_',LAW,'.mat']);
+if mdl == 9
+    Output = load(['GNM_TopoMdl',num2str(2),'_',AddMult,'_',LAW,'.mat']);
 else
-Output = load(['Hansen_Timing_0_Mdl',num2str(mdl),'_',AddMult,'_',LAW,'.mat']);
+Output = load(['GNM_Mdl',num2str(mdl),'_',AddMult,'_',LAW,'.mat']);
 end
-
-[~,I] = min(Output.maxKS); 
-
-Output.optim_P = Output.P(I,:);
-
-Eta(mdlIND,:) = Output.optim_P(1);
-if length(Output.optim_P)==4
-Gam(mdlIND,:) = Output.optim_P(2);
-Alpha(mdlIND,:) = Output.optim_P(4);
-%f(mdlIND,:) = triu2vec(Output.PDMs{2},1);
-elseif length(Output.optim_P)==2
-Gam(mdlIND,:) = Output.optim_P(2);
-Alpha(mdlIND,:) = 1;
-%f(mdlIND,:) = triu2vec(Output.PDMs{2},1);
-end 
 
 %load('./data/random200_data4topomdl.mat')
 % 
-switch FitType
-    case 'maxKS'
-    MdlFit(mdlIND,:) = Output.optim_maxKS;
-    bnets = Output.optim_b;
-    DegCorr(mdlIND,:) = Output.optim_DegCorr;
-    case 'degcorr'
-    MdlFit(mdlIND,:) = Output.bestDegCorr_maxKS;
-    bnets = Output.bestDegCorr_b;
-    DegCorr(mdlIND,:) = Output.bestDegCorr_DegCorr;
-end
+    MdlFit(mdlIND,:) = Output.BestFit.(FitType).maxKS;
+    bnets = Output.BestFit.(FitType).b;
+    DegCorr(mdlIND,:) = Output.BestFit.(FitType).DegCorr;
+
+
 
 n = length(A);
 
@@ -109,35 +75,23 @@ for i = 1:length(bnets)
     B = B + B';
     bvec = triu2vec(B,1);
     MdlDeg(mdlIND,:) = MdlDeg(mdlIND,:)+sum(B);
-    MdlEdges(mdlIND,:) = MdlEdges(mdlIND,:)+bvec';
-    [Edge_pdf(i,:,mdlIND),xi] = ksdensity(d(bvec==1),0:160);    
-    Edge_cdf(i,:,mdlIND) = ksdensity(d(bvec==1),0:160,'Function','cdf');   
 
-    BinTest(mdlIND,i,:) = NetworkBinTest(A,B);
     for j = 1:4
         thr = dist_thr{j};
         athr = avec.*thr;
         bthr = bvec.*thr;        
-        EdgeOverlap(mdlIND,i,j) = sum(athr & bthr)/sum(athr | bthr);   
-        %EdgeOverlap(mdlIND,i,j) = sum(athr.*bthr)./sum(athr);
-        %EdgeProp(mdlIND,i,j) = sum(bthr)./sum(thr);
+
         r0(mdlIND,i,j) = sum((athr==0).*(bthr==0))./sum(athr==0);
         r1(mdlIND,i,j) = sum(athr.*bthr)./sum(athr);
-        RR(mdlIND,i,j) = sqrt(r0(mdlIND,i,j).*r1(mdlIND,i,j));
-
-        r2(mdlIND,i,j) = sum(athr==0 & bthr==1)./sum(bthr);
 
         FalseDiscoveryRate(mdlIND,i,j) = sum(athr==0&bthr==1)./sum(bthr);
-%         if FalseDiscoveryRate(mdlIND,i,j) == 0
-% error('!!!!!')
-%         end
-end
+    end
 
 end
 
 end
 
-MdlEdges= MdlEdges./100;
+
 MdlDeg = MdlDeg./100;
 MAP_names = {'Spatial','Gene coexpression','Receptor similarity','Laminar similarity','Metabolic connectivity','Haemodynamic connectivity','Electrophysiological connectivity','Temporal similarity','Random similarity','Matching'};
 
@@ -172,8 +126,11 @@ MorS='S';
 FigLbl2 = 'C';
 end
 
+
+figure('Position',[-2000 -300 1888 1117])
+
 for j = 1:3
-figure
+subplot(2,3,j)
     if j == 1
     x = squeeze(r1(:,:,1));
     y = MdlFit;
@@ -194,24 +151,67 @@ figure
 Grp = ones(size(x));
 for i = 1:10; Grp(i,:)=i; end
 
-if PlotKSden == 1
-    [MainPlot,~,~,Cbar] = scatterWithKSden(x(:),y(:),Grp(:),'colormap',cmap_alpha,'grouping',Grp(:),'grouping_colors',cmap);
-    set(gcf, 'currentaxes', MainPlot)
-    delete(Cbar)
-else
-    scatter(x(:),y(:),100,Grp(:),'filled','MarkerFaceAlpha',.5)
-    colormap(cmap_alpha)
-    clim([.5 10.5])
-end
+scatter(x(:),y(:),100,Grp(:),'filled','MarkerFaceAlpha',.5)
+colormap(cmap_alpha)
+clim([.5 10.5])
+
 
 hold on
 %s1 = scatter(mean(x,2),mean(y,2),100,cmap,'filled','MarkerEdgeColor',[0 0 0]);
 for i = 1:size(x,1)
-s1(i) = scatter(mean(x(i,:)),mean(y(i,:)),100,cmap(i,:),'filled','MarkerEdgeColor',[0 0 0]);
+scatter(mean(x(i,:)),mean(y(i,:)),100,cmap(i,:),'filled','MarkerEdgeColor',[0 0 0]);
 end
 
+ylabel(ylabel_name)
+xlabel(xlabel_name)
+
+set(gca,'FontSize',20)
+end
+
+subplot(2,3,4:6)
+
+data = cell(NMdls*3,1);
+for i = 1:NMdls
+data{i} = squeeze(r1(i,:,2));
+data{i+NMdls} = squeeze(r1(i,:,3));
+data{i+(NMdls*2)} = squeeze(r1(i,:,4));
+end
+jittercamp = repmat(cmap,3,1);
+JitterPlot(data,jittercamp,1)
+xticks([(1+NMdls)/2 ((NMdls+1)+(NMdls*2))/2 ((NMdls*2+1)+(NMdls*3))/2])
+xticklabels({'Short-range (<30mm)','Mid-range (30-90mm)','Long-range (>90mm)'})
+clear ss
+for i = 1:NMdls
+    ss(i) = scatter(-1,-1,50,cmap(i,:),'filled','MarkerEdgeColor',[0 0 0]);
+end
+xlim([0.5 (NMdls*3)+.5])
+hold on
+ylimits = ylim;
+plot([NMdls+.5 NMdls+.5],[0 1],'k','LineWidth',2)
+plot([(NMdls*2)+.5 (NMdls*2)+.5],[0 1],'k','LineWidth',2)
+
+ylabel({'Proportion of empirical','connections captured'})
+set(gca,'FontSize',20)
+
+set(gca,'Position',[0.1300    0.0574    0.7750    0.3981])
+
+lgd = legend(ss,MAP_names,'NumColumns',5,'Location','northoutside');
+lgd.FontSize=18;
+
+set(gca,'Position',[0.1300    0.0574    0.7750    0.3981])
+
+
+AddLetters2Plots(gcf, {'A','B','C','D'},'HShift', -.23, 'VShift', -.07,'FontSize',36)
+
+
+
+lgd.Position = [0.0452313280555853 0.0182036466809212 0.917563756086334 0.123198850010589];
+lgd.Box = 'off'; 
+
+
+
 if Addlegend == 1
-lgd = legend(s1,MAP_names,'NumColumns',3);
+lgd = legend(s1,MAP_names,'NumColumns',3, 'Location','southoutside');
 lgd.FontSize=12;
 lgd.Position = [0.0452313280555853 0.0182036466809212 0.917563756086334 0.123198850010589];
 lgd.Box = 'off'; 
@@ -231,42 +231,8 @@ end
 
 print(['./figures/Plot1/',FitType,'/',MorS,num2str(j),'_',form_name,'.png'],'-dpng','-r300')
 
-end
 
 Spos = gcf().Position;
-% %%
-% 
-% PlotNames = {'False-positive rate','False-negative rate','Sensitivity','Specificity','Accuracy'};
-% Plot_labels =  {'A','B','C','D','E'};
-% 
-% for j = 1:5
-%     figure
-% %subplot(1,5,j)
-%     data = cell(10,1);
-% for i = 1:10
-% data{i} = BinTest(i,:,j);
-% end
-% JitterPlot(data,cmap,1)
-% ylabel(PlotNames{j})
-% xticks([])
-% ax = gca;
-% ax.Position(1) = .2;
-% set(gca,'FontSize',18)
-% 
-% AddLetters2Plots(gcf,{Plot_labels{j}},'HShift',-.2, 'VShift', -.07,'FontSize',36)
-% 
-% Spos1 = gcf().Position;
-% 
-% ScatterPlotWidth = round((300/96)*Spos(3));
-% 
-% DesiredWidth = ScatterPlotWidth*3;
-% 
-% SaveRes = round(96*(DesiredWidth/Spos1(3)));
-% 
-% print(['./figures/Plot1/',FitType,'/Bintest',Plot_labels{j},'_',form_name,'.png'],'-dpng',['-r',num2str(SaveRes)])
-% 
-% end
-% 
 
 %%
 
@@ -382,7 +348,7 @@ print(['./figures/Plot1/',FitType,'/FDRConn_',form_name,'.png'],'-dpng',['-r',nu
 
 %%
 
-figure('Position',[1 100 1384 514])
+figure('Position',[1 100 1384 59])
 clear ss
 for i = 1:NMdls
     hold on
@@ -396,64 +362,9 @@ axis off
 leg.Position=[-0.0056    0.0338    1.0001    0.9713];
 print('./figures/Plot1/LEGEND.png','-dpng','-r300')
 
-run = 0;
-if run == 1
 
-load('fsaverage_surface_data.mat')
-
-surface.vertices = lh_inflated_verts;
-surface.faces = lh_faces;
-
-Deg = sum(A);
-
-parc = Scha7_parcs.lh_scha400;
-figure('Position',[150.6000  211.4000  560.0000  392.4000])
-axes('Position',[0.0029   -0.0972    0.9936    1.2256])
-brainCmap = brewermap(256,'YlOrRd');
-
-p_left = plotSurfaceROIBoundary(surface,parc,Deg,'midpoint',brainCmap,2,[0 max(Deg)]);
-camlight(80,-10);
-camlight(-80,-10);
-view([-90 0])
-axis off
-axis image
-
-print('./figures/Deg_Lat_0.png','-dpng')
-
-view([90 0])
-print('./figures/Deg_Med_0.png','-dpng')
-
-system(['"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI/magick.exe" montage ./figures/Deg_Lat_',num2str(0),'.png ./figures/Deg_Med_',num2str(0),'.png -geometry +2+1 -tile 2x1 Deg',num2str(0),'.png'])
-
-delete('./figures/Deg_Lat_0.png')
-delete('./figures/Deg_Med_0.png')
-% 
-% system(['"H:\ImageMagick-7.0.10-Q16-HDRI/magick.exe" montage ./figures/OHBMfigures/Deg_Lat_',num2str(0),'.png ./figures/OHBMfigures/Deg_Med_',num2str(0),'.png -geometry +2+1 -tile 2x1 Deg',num2str(0),'.png'])
-% 
-for i = 1:NMdls
-
-DegData = MdlDeg(i,:);
-
-FaceVertexCData = makeFaceVertexCData(lh_inflated_verts,lh_faces,parc,DegData,brainCmap,[0 max(DegData)],0);
-
-set(p_left,'FaceVertexCData',FaceVertexCData,'EdgeColor','none','FaceColor','flat','Clipping','off');
-
-view([-90 0])
-print(['./figures/Deg_Lat_',num2str(i),'.png'],'-dpng')
-
-view([90 0])
-print(['./figures/Deg_Med_',num2str(i),'.png'],'-dpng')
-
-system(['"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI/magick.exe" montage ./figures/Deg_Lat_',num2str(i),'.png ./figures/Deg_Med_',num2str(i),'.png -geometry +2+1 -tile 2x1 ./figures/Deg_',strrep(MAP_names{i}, ' ', ''),'_',form_name,'.png'])
-
-delete(['./figures/Deg_Lat_',num2str(i),'.png'])
-delete(['./figures/Deg_Med_',num2str(i),'.png'])
-
-end
-
-end
-
-%%
 
         end
-    end
+        end
+
+  

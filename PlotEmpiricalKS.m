@@ -3,9 +3,9 @@ function PlotEmpiricalKS(WhatX,WhatY,WhatZ,Parc,TractData)
 if ischar(TractData)
 switch TractData
     case 'iFOD2'
-data = load('.\outputs\Schaefer_7net_iFOD2_acpc_lh_strThr_TopoComp.mat');
+data = load('.\outputs\Schaefer_7net_iFOD2_acpc_lh_str70Thr_fitMetrics.mat');
     case 'FACT'
-data = load('.\outputs\Schaefer_7net_FACT_acpc_lh_strThr_TopoComp.mat');
+data = load('.\outputs\Schaefer_7net_FACT2_acpc_lh_str70Thr_fitMetrics.mat');
 end
 else
 data = TractData;
@@ -35,7 +35,7 @@ switch WhatX
         X = data.DegCorr(sub2use,sub2use,SchUse);
         Xlbl = 'Degree correlation';
     case 'edge'
-        X = data.EdgeOverlap{1}(sub2use,sub2use,SchUse);
+        X = data.EdgeJaccard(sub2use,sub2use,SchUse);
         Xlbl = 'Connection overlap ({\itJ})';
     case 'edge1'
         X = data.EdgeOverlap{2}(sub2use,sub2use,SchUse);
@@ -47,17 +47,17 @@ switch WhatX
         X = data.EdgeOverlap{4}(sub2use,sub2use,SchUse);
         Xlbl = 'Long-edge overlap ({\itJ})';
     case 'rmse'
-        X = squeeze(max(data.RMSE(sub2use,sub2use,SchUse,1:4),[],4));
+        X = data.maxRMSE(sub2use,sub2use,SchUse);
         Xlbl = 'max(RMSE)';
     case 'TFdiff'
-        X = data.TF(sub2use,sub2use,SchUse);
+        X = data.TFdiff(sub2use,sub2use,SchUse);
         Xlbl = 'TFdiff';
     case 'TND'
         X = data.TopoDist(sub2use,sub2use,SchUse);
         Xlbl = 'TND';
-    case 'max(1-r)'
-        X = 1-squeeze(max(data.TopogCorr(sub2use,sub2use,SchUse,1:4),[],4));
-        Xlbl = 'max(1-r)';
+    case 'maxRd'
+        X = data.ramRd(sub2use,sub2use,SchUse);
+        Xlbl = 'maxRd';
 end
 
 switch WhatY
@@ -71,7 +71,7 @@ switch WhatY
         Y = data.DegCorr(sub2use,sub2use,SchUse);
         Ylbl = 'Degree correlation';
     case 'edge'
-        Y = data.EdgeOverlap{1}(sub2use,sub2use,SchUse);
+        Y = data.EdgeJaccard(sub2use,sub2use,SchUse);
         Ylbl = 'Connection overlap ({\itJ})';
     case 'edge1'
         Y = data.EdgeOverlap{2}(sub2use,sub2use,SchUse);
@@ -83,17 +83,17 @@ switch WhatY
         Y = data.EdgeOverlap{4}(sub2use,sub2use,SchUse);
         Ylbl = 'Long-edge overlap ({\itJ})';
         case 'RMSE'
-        Y = squeeze(max(data.RMSE(sub2use,sub2use,SchUse,1:4),[],4));
+        Y = data.maxRMSE(sub2use,sub2use,SchUse);
         Ylbl = 'max(RMSE)';
     case 'TFdiff'
-        Y = data.TF(sub2use,sub2use,SchUse);
+        Y = data.TFdiff(sub2use,sub2use,SchUse);
         Ylbl = 'TFdiff';
     case 'TND'
         Y = data.TopoDist(sub2use,sub2use,SchUse);
         Ylbl = 'TND';
-    case 'max(1-r)'
-        Y = 1-squeeze(max(data.TopogCorr(sub2use,sub2use,SchUse,1:4),[],4));
-        Ylbl = 'max(1-r)';
+    case 'maxRd'
+        Y = data.ramRd(sub2use,sub2use,SchUse);
+        Ylbl = 'maxRd';
 end
 
 switch WhatZ
@@ -124,17 +124,17 @@ switch WhatZ
         Zlbl = 'KS determinant';
         Zlbls = {'Deg.','Clust.','Bet.','Edge Dst.'};
     case 'RMSE'
-        Z = squeeze(max(data.RMSE(sub2use,sub2use,SchUse,1:4),[],4));
+        Z = data.maxRMSE(sub2use,sub2use,SchUse);
         Zlbl = 'max(RMSE)';
     case 'TFdiff'
-        Z = data.TF(sub2use,sub2use,SchUse);
+        Z = data.TFdiff(sub2use,sub2use,SchUse);
         Zlbl = 'TFdiff';
     case 'TND'
         Z = data.TopoDist(sub2use,sub2use,SchUse);
         Zlbl = 'TND';
-    case 'max(1-r)'
-        Z = 1-squeeze(max(data.TopogCorr(sub2use,sub2use,SchUse,1:4),[],4));
-        Zlbl = 'max(1-r)';
+    case 'maxRd'
+        Z = data.ramRd(sub2use,sub2use,SchUse);
+        Zlbl = 'maxRd';
     case 'corr'        
         Zlbl = 'Corr. determinant';
         Zlbls = {'Deg.','Clust.','Bet.','Nodal Dst.'};
@@ -151,7 +151,7 @@ dist_min = min(x,[],'All');
 
 for s = 1:length(SchUse)
 switch WhatZ
-    case {'den','max(1-r)','maxKS','edge','TND','TFdiff','RMSE','DegCorr'}
+    case {'den','maxRd','maxKS','edge','TND','TFdiff','RMSE','DegCorr'}
         z = triu2vec(squeeze(Z(:,:,s)),1);
     case 'KS'
         %[~,z] = max(squeeze(Z(:,:,:,SchUse(s))),[],3); 

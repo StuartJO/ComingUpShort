@@ -80,7 +80,6 @@ Output = load(['Hansen_Timing_0_TopoMdl_',num2str(mdl),'_',AddMult,'_',LAW,'.mat
 [~,I] = min(Output.maxKS); 
 
 mdlname = Output.Input.TopoType;
-
 TopoMAP_names{mdlIND} = mdlname;
 
 Output.optim_P = Output.P(I,:);

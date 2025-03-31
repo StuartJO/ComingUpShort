@@ -44,7 +44,7 @@ figure('Position',[1	49	1382.40000000000	747.200000000000]);
 ax1{1} = subplot(4,4,[1:12]);
 
 hold on
-plot([0 1],[0.159 0.159],'k','LineStyle','--')
+plot([0 1],[0.159 0.159],'k','LineStyle','-')
 
 for j = 1:3
     plot(1-EdgeOvlp,TopoType{j}(:,1),'Color',colors(j,:),'LineWidth',2)

@@ -186,6 +186,11 @@ s_top.Position(2) = NewYPos+NewYHeight+.05;
 s_side.Position(2) = NewYPos;
 s_side.Position(4) = NewYHeight;
 
+XposStart = mainPlot.Position(1);
+
+mainPlot.Position(1) = XposStart+.01;
+s_top.Position(1) = XposStart+.01;
+
 if PlotAnnot
     annot = annotation(gcf, 'textbox',...
         [0,  .92, 0.0 0.0],...
