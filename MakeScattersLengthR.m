@@ -1,149 +1,86 @@
-%mkdir(['./figures/Plot1/',FitType])
+load('BestMdls_GNM_DegCorr_Add_exponential.mat')
 
-FitType = 'maxKS';
+SAVEDIR='GNM_DegCorr_Add_exponential';
+mkdir(['./figures/',SAVEDIR])
+Figlabels = {'A','B','C','D'};
 
-mdldata = load('Hansen_networks.mat');
+NMdls = length(Mdl_names);
 
-A_dist = mdldata.A_dist;
-
-A = mdldata.adj{1};
-
-d = triu2vec(mdldata.A_dist,1);
-
-avec = triu2vec(A,1);
-
-dist_thr{2} = d<30;
-dist_thr{3} = d>=30 & d<=90;
-dist_thr{4}= d>90;
-dist_thr{1}= d>=0;
-
-d_short = d<30;
-d_mid = d>=30 & d<=90;
-d_long = d>90;
-
-mdls = 0:9;
-
-NMdls = length(mdls);
-
-MdlFit = zeros(NMdls,100);
-DegCorr = zeros(NMdls,100);
-
-MdlDeg = zeros(NMdls,200);
-
+if NMdls == 10
 cmap = [0.5 0.5 0.5; lines(7); 0.6941 0.3490 0.1569; [251,154,153]./255];
+elseif NMdls == 12
+cmap = [166,206,227;...
+31,120,180;...
+178,223,138;...
+51,160,44;...
+251,154,153;...
+227,26,28;...
+253,191,111;...
+255,127,0;...
+202,178,214;...
+106,61,154;...
+255,255,153;...
+177,89,40]./255;
+end
 cmap_alpha = make_alpha_rgb(cmap,.5);
 
-MAP_names = {'Spatial','Gene coexpression','Receptor similarity','Laminar similarity','Metabolic connectivity','Haemodynamic connectivity','Electrophysiological connectivity','Temporal similarity','Random similarity','Matching'};
-
-PlotLables = {'A','B','C'};
-ITER = 1;
-    for form = 0:1
-        for law = 0:1
-
-            if form == 0
-                AddMult = 'Mult';
-            else
-            AddMult = 'Add';
-            end
-            if law == 0
-                LAW = 'powerlaw';
-            else
-            LAW = 'exponential';
-            end
-            form_name = ['PhysMdls_',AddMult,'_',LAW];
-
-            FalseDiscoveryRate = zeros(NMdls,100,4);
-
-for mdlIND = 1:NMdls
-    mdl = mdls(mdlIND);
-if mdl == 9
-    Output = load(['GNM_TopoMdl',num2str(2),'_',AddMult,'_',LAW,'.mat']);
-else
-Output = load(['GNM_Mdl',num2str(mdl),'_',AddMult,'_',LAW,'.mat']);
-end
-
-%load('./data/random200_data4topomdl.mat')
-% 
-    MdlFit(mdlIND,:) = Output.BestFit.(FitType).maxKS;
-    bnets = Output.BestFit.(FitType).b;
-    DegCorr(mdlIND,:) = Output.BestFit.(FitType).DegCorr;
-
-
-
-n = length(A);
-
-for i = 1:length(bnets)
-    b = bnets{i};
-    B = zeros(n);
-    B(b) = 1;
-    B = B + B';
-    bvec = triu2vec(B,1);
-    MdlDeg(mdlIND,:) = MdlDeg(mdlIND,:)+sum(B);
-
-    for j = 1:4
-        thr = dist_thr{j};
-        athr = avec.*thr;
-        bthr = bvec.*thr;        
-
-        r0(mdlIND,i,j) = sum((athr==0).*(bthr==0))./sum(athr==0);
-        r1(mdlIND,i,j) = sum(athr.*bthr)./sum(athr);
-
-        FalseDiscoveryRate(mdlIND,i,j) = sum(athr==0&bthr==1)./sum(bthr);
-    end
-
-end
-
-end
-
-
-if form == 1 && law == 1
-figure('Position',[132 76 1103 700])
-
 for j = 1:3
-subplot(2,3,j)
+figure
     if j == 1
-    x = squeeze(r1(:,:,1));
-    y = MdlFit;
+    x = squeeze(R(:,:,1));
+    y = maxKS;
     xlabel_name = 'Connection recovery ({\itR})';
     ylabel_name = 'max({\itKS})';
     elseif j == 2
     x = DegCorr;
-    y = MdlFit;
+    y = maxKS;
     xlabel_name = 'Degree correlation';
     ylabel_name = 'max({\itKS})';
     elseif j == 3
-    y = DegCorr;
-    x = squeeze(r1(:,:,1));
+    y = maxKS;
+    x = squeeze(R(:,:,1));
     xlabel_name = 'Connection recovery ({\itR})';
     ylabel_name = 'Degree correlation';
     end
 
 Grp = ones(size(x));
-for i = 1:10; Grp(i,:)=i; end
+for i = 1:NMdls; Grp(i,:)=i; end
 
-scatter(x(:),y(:),50,Grp(:),'filled','MarkerFaceAlpha',.5)
+scatter(x(:),y(:),100,Grp(:),'filled','MarkerFaceAlpha',.5)
 colormap(cmap_alpha)
-clim([.5 10.5])
+clim([.5 NMdls+.5])
 
 hold on
 
 for i = 1:size(x,1)
-scatter(mean(x(i,:)),mean(y(i,:)),50,cmap(i,:),'filled','MarkerEdgeColor',[0 0 0]);
+scatter(mean(x(i,:)),mean(y(i,:)),100,cmap(i,:),'filled','MarkerEdgeColor',[0 0 0]);
 end
 
 ylabel(ylabel_name)
 xlabel(xlabel_name)
 
-set(gca,'FontSize',12)
+ax = gca;
+ylabel(ylabel_name)
+xlabel(xlabel_name)
+set(gca,'FontSize',20)
+
+ax.Position = [0.2486    0.1875    0.6564    0.7375];
+
+AddLetters2Plots(gcf, {Figlabels{j}},'HShift', -.23, 'VShift', -.07,'FontSize',36)
+
+print(['./figures/',SAVEDIR,'/Scatter',num2str(j),'.png'],'-dpng','-r300')
+
 end
 
-subplot(2,3,4:6)
+Spos = gcf().Position;
+
+figure('Position',[1 100 1384 514])
 
 data = cell(NMdls*3,1);
 for i = 1:NMdls
-data{i} = squeeze(r1(i,:,2));
-data{i+NMdls} = squeeze(r1(i,:,3));
-data{i+(NMdls*2)} = squeeze(r1(i,:,4));
+data{i} = squeeze(R(i,:,2));
+data{i+NMdls} = squeeze(R(i,:,3));
+data{i+(NMdls*2)} = squeeze(R(i,:,4));
 end
 jittercamp = repmat(cmap,3,1);
 JitterPlot(data,jittercamp,1)
@@ -160,74 +97,33 @@ plot([NMdls+.5 NMdls+.5],[0 1],'k','LineWidth',2)
 plot([(NMdls*2)+.5 (NMdls*2)+.5],[0 1],'k','LineWidth',2)
 
 ylabel({'Proportion of empirical','connections captured'})
-set(gca,'FontSize',12)
+set(gca,'FontSize',20)
+Spos1 = gcf().Position;
+ScatterPlotWidth = round((300/96)*Spos(3));
+DesiredWidth = ScatterPlotWidth*3;
+SaveRes = round(96*(DesiredWidth/Spos1(3)));
 
-set(gca,'Position',[0.1300    0.0574    0.7750    0.3981])
+set(gca,'Position',[0.0990    0.1100    0.8815    0.8150])
 
-lgd = legend(ss,MAP_names,'NumColumns',5,'Location','northoutside');
-lgd.FontSize=10;
+AddLetters2Plots(gcf, {Figlabels{4}},'HShift',-.09, 'VShift', -.05,'FontSize',36)
 
-set(gca,'Position',[0.1300    0.0574    0.7750    0.3566])
-lgdPosition = lgd.Position;
+print(['./figures/',SAVEDIR,'/DistThr.png'],'-dpng',['-r',num2str(SaveRes)])
 
-lgd.Position(1) = ( 1-lgdPosition(3) )/2;
+%%
 
-AddLetters2Plots(gcf, {'A','B','C','D'},'HShift', -.06, 'VShift', -0.04,'FontSize',24)
-
-saveas(gcf,['TEST.svg'])
-
-
-end
-
-
-if form ~= 1 || law ~= 1
-
-figure('Position',[1 100 1206 514])
-
-data = cell(NMdls*3,1);
-for i = 1:NMdls
-data{i} = squeeze(r1(i,:,2));
-data{i+NMdls} = squeeze(r1(i,:,3));
-data{i+(NMdls*2)} = squeeze(r1(i,:,4));
-end
-jittercamp = repmat(cmap,3,1);
-JitterPlot(data,jittercamp,1)
-xticks([(1+NMdls)/2 ((NMdls+1)+(NMdls*2))/2 ((NMdls*2+1)+(NMdls*3))/2])
-xticklabels({'Short-range (<30mm)','Mid-range (30-90mm)','Long-range (>90mm)'})
+figure('Position',[50 100 1384 84])
 clear ss
 for i = 1:NMdls
-    ss(i) = scatter(-1,-1,50,cmap(i,:),'filled');
+    hold on
+    %ss(i) = scatter(-1,-1,100,cmap(i,:),'filled');
+    ss(i) = plot(nan, nan,'Color','none','MarkerSize', 15,'Marker','o','MarkerFaceColor',cmap(i,:));
 end
-xlim([0.5 (NMdls*3)+.5])
-hold on
-ylimits = ylim;
-plot([NMdls+.5 NMdls+.5],[0 1],'k','LineWidth',2)
-plot([(NMdls*2)+.5 (NMdls*2)+.5],[0 1],'k','LineWidth',2)
+leg = legend(ss,Mdl_names,'Orientation','Horizontal','Location','northoutside','FontSize',16,'NumColumns',5,'Box','off');
+box off
+axis off
+%leg.Position=[-0.0056    0.2741    1.0001    0.4906];
+leg.Position=[-0.0022    0.1870    1.0007    0.6964];
 
-leg = legend(ss,MAP_names,'Orientation', 'Horizontal','Location','northoutside','FontSize',12,'NumColumns',5);
+print(['./figures/',SAVEDIR,'/LEGEND.png'],'-dpng',['-r',num2str(SaveRes)])
 
-set(gca,'Position',[0.1300    0.1100    0.7750    0.7382])
-axPos = [0.1300    0.1100    0.7750    0.7382];
-
-aXRange = axPos(3)-axPos(1);
-legXrange = aXRange*.75;
-legXStart = (1-legXrange)/2;
-
-leg.Position = [legXStart,0.90,legXrange,0.0741];
-
-ylabel({'Proportion of empirical','connections captured'})
-set(gca,'FontSize',20)
-ax = gca;
-ax.Position = [0.1009    0.0903    0.8925    0.7658];
-leg.Position = [0.0810    0.8938    0.9142    0.0866];
-%AddLetters2Plots(gcf, {FigLbl2},'HShift', -0.1, 'VShift', -0.1,'FontSize',36)
-AddLetters2Plots(gcf, {PlotLables{ITER}},'HShift',-.1, 'VShift', -.14,'FontSize',36)
-
-print()
-%saveas(gcf,['LEN_R1_',PlotLables{ITER},'_',form_name,'.svg'])
-
-ITER = ITER + 1;
-end
-
-        end
-    end
+%%

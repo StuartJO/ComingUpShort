@@ -54,14 +54,14 @@ for i = 1:n_sub-1
     maxRd(j,i,s) = maxRd(i,j,s);
     EdgeJaccard(j,i,s) = EdgeOverlap(4);
     EdgeJaccard(i,j,s) = EdgeOverlap(4);
-
+    maxRMSE(j,i,s) = maxRMSE(i,j,s);
     end
 end
 
-
+disp(num2str(s))
 toc
 end
-if x == 1
+if x == 2
     save('Schaefer_7net_FACT_acpc_lh_str70Thr_fitMetrics.mat','maxKS','DegCorr','TFdiffnc','TFdiff','maxRd','maxRMSE','TND','EdgeJaccard')
 else
     save('Schaefer_7net_iFOD2_acpc_lh_str70Thr_fitMetrics.mat','maxKS','DegCorr','TFdiffnc','TFdiff','maxRd','maxRMSE','TND','EdgeJaccard')
