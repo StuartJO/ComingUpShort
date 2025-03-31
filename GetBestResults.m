@@ -66,7 +66,7 @@ for f = 1:length(FitTypes)
                 DegCorr = zeros(NMdls,100);   
                 R = zeros(NMdls,100,4);
                 EdgeFDR = zeros(NMdls,100,4);
-        
+                meanProb = zeros(NMdls,length(avec));
                 for mdlIND = 1:NMdls
                     mdl = mdls(mdlIND);
                 
@@ -91,6 +91,7 @@ for f = 1:length(FitTypes)
                     maxKS(mdlIND,:) = Output.BestFit.(FitType).maxKS;
                     bnets = Output.BestFit.(FitType).b;
                     DegCorr(mdlIND,:) = Output.BestFit.(FitType).DegCorr;
+                    meanProb(mdlIND,:) = Output.BestFit.maxKS.meanProb;
                 
                     n = length(A);
                     
@@ -117,7 +118,7 @@ for f = 1:length(FitTypes)
                 
                 end
         
-            save([save_name_prefix,'_',FitType,'_',mdlform,'_',expo,'.mat'],'R','EdgeFDR','maxKS','DegCorr','Mdl_names','expo','mdlform')
+            save([save_name_prefix,'_',FitType,'_',mdlform,'_',expo,'.mat'],'R','EdgeFDR','maxKS','DegCorr','Mdl_names','expo','mdlform','meanProb')
     
             end
         

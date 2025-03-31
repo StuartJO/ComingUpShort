@@ -1,8 +1,17 @@
-load('BestMdls_GNM_DegCorr_Add_exponential.mat')
+function PlotGNMPerformance(INPUT,PLOTLABELS,SAVEDIR)
 
-SAVEDIR='GNM_DegCorr_Add_exponential';
+load(INPUT,'R','EdgeFDR','maxKS','DegCorr','Mdl_names')
+
+if nargin < 2
+    PLOTLABELS = {'A','B','C','D','E'};
+end
+
+if nargin < 3
+    [name, ~] = fileparts(INPUT);
+    SAVEDIR=name;
+end
+
 mkdir(['./figures/',SAVEDIR])
-Figlabels = {'A','B','C','D'};
 
 NMdls = length(Mdl_names);
 
@@ -66,7 +75,7 @@ set(gca,'FontSize',20)
 
 ax.Position = [0.2486    0.1875    0.6564    0.7375];
 
-AddLetters2Plots(gcf, {Figlabels{j}},'HShift', -.23, 'VShift', -.07,'FontSize',36)
+AddLetters2Plots(gcf, {PLOTLABELS{j}},'HShift', -.23, 'VShift', -.07,'FontSize',36)
 
 print(['./figures/',SAVEDIR,'/Scatter',num2str(j),'.png'],'-dpng','-r300')
 
@@ -74,7 +83,7 @@ end
 
 Spos = gcf().Position;
 
-figure('Position',[1 100 1384 514])
+figure('Position',[1 100 1385 514])
 
 data = cell(NMdls*3,1);
 for i = 1:NMdls
@@ -105,7 +114,7 @@ SaveRes = round(96*(DesiredWidth/Spos1(3)));
 
 set(gca,'Position',[0.0990    0.1100    0.8815    0.8150])
 
-AddLetters2Plots(gcf, {Figlabels{4}},'HShift',-.09, 'VShift', -.05,'FontSize',36)
+AddLetters2Plots(gcf, {PLOTLABELS{4}},'HShift',-.09, 'VShift', -.05,'FontSize',36)
 
 print(['./figures/',SAVEDIR,'/DistThr.png'],'-dpng',['-r',num2str(SaveRes)])
 
@@ -127,3 +136,8 @@ leg.Position=[-0.0022    0.1870    1.0007    0.6964];
 print(['./figures/',SAVEDIR,'/LEGEND.png'],'-dpng',['-r',num2str(SaveRes)])
 
 %%
+
+%system(['"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI/magick.exe" convert \( ./figures/',SAVEDIR,'/Scatter1.png ./figures/',SAVEDIR,'/Scatter2.png ./figures/',SAVEDIR,'/Scatter3.png +append \) ./figures/',SAVEDIR,'/DistThr.png ./figures/',SAVEDIR,'/LEGEND.png -append final.png'])
+
+
+%system(['"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI/magick.exe" montage ./figures/Deg_Lat_',num2str(0),'.png ./figures/Deg_Med_',num2str(0),'.png -geometry +2+1 -tile 2x1 Deg',num2str(0),'.png'])
