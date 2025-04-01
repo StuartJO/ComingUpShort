@@ -1,12 +1,7 @@
-
-% EdgeOverlap = zeros(100,10);
-% 
-% MdlFitType = zeros(100,6,10);
-% MdlDegCorr=zeros(100,10);
 mdls=1:10;
 NMdls=length(mdls);
 cmap = [0.5 0.5 0.5; lines(7); 0.6941 0.3490 0.1569; [251,154,153]./255];
- cmap2 = [0 0 0; cmap];
+cmap2 = [0 0 0; cmap];
 loadin = 1;
 if loadin
 
@@ -97,8 +92,7 @@ DATAind = [EMPDATA_IND(:); MDLDATA_IND(:)];
 
 EMPDATA = EmpFitType(:,6);
 DATAj = [EMPDATA(:); MDLDATA(:)];
-% [PlotMain,PlotTop,PlotSide] = scatterWithKSden(DATAi,DATAj,DATAind,'grouping',DATAind,'grouping_colors',cmap2,'colormap',cmap2,'PlotColorbar','off','Annot',FIGLABEL{i});
-% set(gcf, 'CurrentAxes', PlotMain)
+
 scatter(DATAi,DATAj,30,cmap2(DATAind,:),'filled','MarkerFaceAlpha',.1); colormap(cmap2); clim([.5 10.5])
 
 hold on
