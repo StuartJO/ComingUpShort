@@ -35,9 +35,9 @@ for f = 1:length(FitTypes)
                 dist_thr{3} = d>=30 & d<=90;
                 dist_thr{4}= d>90;
                 dist_thr{1}= d>=0;
-                d_short = d<30;
-                d_mid = d>=30 & d<=90;
-                d_long = d>90;
+                % d_short = d<30;
+                % d_mid = d>=30 & d<=90;
+                % d_long = d>90;
             else
                 mdldata = load('Hansen_networks_WB.mat');
                 A_dist = mdldata.A_dist;
@@ -48,9 +48,13 @@ for f = 1:length(FitTypes)
                 dist_thr{3} = d>=30 & d<=90;
                 dist_thr{4}= d>90;
                 dist_thr{1}= d>=0;
-                d_short = d<30;
-                d_mid = d>=30 & d<=90;
-                d_long = d>90;
+                % d_short = d<30;
+                % d_mid = d>=30 & d<=90;
+                % d_long = d>90;
+                Nnodes = length(A);
+                InterHemi = [zeros(Nnodes/2) ones(Nnodes/2); ones(Nnodes/2) zeros(Nnodes/2)]; 
+                InterHemiVec = triu2vec(InterHemi);
+
             end
     
     
@@ -67,6 +71,11 @@ for f = 1:length(FitTypes)
                 R = zeros(NMdls,100,4);
                 EdgeFDR = zeros(NMdls,100,4);
                 meanProb = zeros(NMdls,length(avec));
+                if MdlTypes == 3
+                    R = zeros(NMdls,100,4,3);
+                    EdgeFDR = zeros(NMdls,100,4,3);
+                end
+
                 for mdlIND = 1:NMdls
                     mdl = mdls(mdlIND);
                 
@@ -109,17 +118,26 @@ for f = 1:length(FitTypes)
                             bthr = bvec.*thr;        
                     
                             %r0(mdlIND,i,j) = sum((athr==0).*(bthr==0))./sum(athr==0);
-                            R(mdlIND,i,j) = sum(athr.*bthr)./sum(athr);
-                    
-                            EdgeFDR(mdlIND,i,j) = sum(athr==0&bthr==1)./sum(bthr);
+
+                            if MdlTypes == 3
+                                R(mdlIND,i,j,1) = sum(athr.*bthr)./sum(athr);
+                                R(mdlIND,i,j,2) = sum(athr&bthr& InterHemiVec==1)./sum(athr & InterHemiVec==1);
+                                R(mdlIND,i,j,3) = sum(athr&bthr& InterHemiVec==0)./sum(athr & InterHemiVec==0);
+
+                                EdgeFDR(mdlIND,i,j,1) = sum(athr==0&bthr==1)./sum(bthr);
+                                EdgeFDR(mdlIND,i,j,2) = sum(athr==0&bthr==1& InterHemiVec==1)./sum(bthr & InterHemiVec==1);
+                                EdgeFDR(mdlIND,i,j,3) = sum(athr==0&bthr==1& InterHemiVec==0)./sum(bthr & InterHemiVec==0);
+                            else
+                                R(mdlIND,i,j) = sum(athr.*bthr)./sum(athr); 
+                                EdgeFDR(mdlIND,i,j) = sum(athr==0&bthr==1)./sum(bthr);
+                            end
                         end
                     
                     end
                 
                 end
-        
-            save([save_name_prefix,'_',FitType,'_',mdlform,'_',expo,'.mat'],'R','EdgeFDR','maxKS','DegCorr','Mdl_names','expo','mdlform','meanProb')
-    
+
+                save([save_name_prefix,'_',FitType,'_',mdlform,'_',expo,'.mat'],'R','EdgeFDR','maxKS','DegCorr','Mdl_names','expo','mdlform','meanProb')
             end
         
         end

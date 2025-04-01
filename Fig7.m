@@ -132,7 +132,6 @@ annot = annotation(gcf, 'textbox',...
     annot.VerticalAlignment = "bottom";
 if i == 1
 print(['./figures/emp/Fig7_',FIGLABEL{FIGLABEL_ITER(i)},'.png'],'-dpng','-r300')
-saveas(gcf,['./figures/emp/Fig7_',FIGLABEL{FIGLABEL_ITER(i)},'.svg'])
 else
 print(['./figures/emp/PanelS_',FIGLABEL{FIGLABEL_ITER(i)},'.png'],'-dpng','-r300')
 end

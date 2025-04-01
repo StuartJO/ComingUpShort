@@ -5,7 +5,7 @@ switch TractData
     case 'iFOD2'
 data = load('.\outputs\Schaefer_7net_iFOD2_acpc_lh_str70Thr_fitMetrics.mat');
     case 'FACT'
-data = load('.\outputs\Schaefer_7net_FACT2_acpc_lh_str70Thr_fitMetrics.mat');
+data = load('.\outputs\Schaefer_7net_FACT_acpc_lh_str70Thr_fitMetrics.mat');
 end
 else
 data = TractData;

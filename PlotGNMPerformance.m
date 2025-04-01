@@ -1,13 +1,23 @@
-function PlotGNMPerformance(INPUT,PLOTLABELS,SAVEDIR)
+function [FigureOutputLocs,LegendOutputLoc] = PlotGNMPerformance(INPUT,PLOTLABELS,SAVEDIR)
+
+%load(INPUT,'R','EdgeFDR','maxKS','DegCorr','Mdl_names')
 
 load(INPUT,'R','EdgeFDR','maxKS','DegCorr','Mdl_names')
 
+TARGET_DPI = 600;
+
 if nargin < 2
+    if size(R,4)==3
+    PLOTLABELS = {'A','B','C','D','E','F','G','H','I','J'};
+    else
     PLOTLABELS = {'A','B','C','D','E'};
+    end
 end
 
+FigureOutputLocs = cell(1,length(PLOTLABELS));
+
 if nargin < 3
-    [name, ~] = fileparts(INPUT);
+    [~,name] = fileparts(INPUT);
     SAVEDIR=name;
 end
 
@@ -33,10 +43,12 @@ cmap = [166,206,227;...
 end
 cmap_alpha = make_alpha_rgb(cmap,.5);
 
+PlotIND = 1;
+
 for j = 1:3
 figure
     if j == 1
-    x = squeeze(R(:,:,1));
+    x = squeeze(R(:,:,1,1));
     y = maxKS;
     xlabel_name = 'Connection recovery ({\itR})';
     ylabel_name = 'max({\itKS})';
@@ -47,7 +59,7 @@ figure
     ylabel_name = 'max({\itKS})';
     elseif j == 3
     y = maxKS;
-    x = squeeze(R(:,:,1));
+    x = squeeze(R(:,:,1,1));
     xlabel_name = 'Connection recovery ({\itR})';
     ylabel_name = 'Degree correlation';
     end
@@ -75,9 +87,13 @@ set(gca,'FontSize',20)
 
 ax.Position = [0.2486    0.1875    0.6564    0.7375];
 
-AddLetters2Plots(gcf, {PLOTLABELS{j}},'HShift', -.23, 'VShift', -.07,'FontSize',36)
+AddLetters2Plots(gcf, {PLOTLABELS{PlotIND}},'HShift', -.23, 'VShift', -.07,'FontSize',36)
 
-print(['./figures/',SAVEDIR,'/Scatter',num2str(j),'.png'],'-dpng','-r300')
+FigureOutputLocs{PlotIND} = ['./figures/',SAVEDIR,'/Scatter',num2str(j),'.png'];
+
+print(FigureOutputLocs{PlotIND},'-dpng',['-r',num2str(TARGET_DPI)])
+
+PlotIND=PlotIND+1;
 
 end
 
@@ -87,9 +103,9 @@ figure('Position',[1 100 1385 514])
 
 data = cell(NMdls*3,1);
 for i = 1:NMdls
-data{i} = squeeze(R(i,:,2));
-data{i+NMdls} = squeeze(R(i,:,3));
-data{i+(NMdls*2)} = squeeze(R(i,:,4));
+data{i} = squeeze(R(i,:,2,1));
+data{i+NMdls} = squeeze(R(i,:,3,1));
+data{i+(NMdls*2)} = squeeze(R(i,:,4,1));
 end
 jittercamp = repmat(cmap,3,1);
 JitterPlot(data,jittercamp,1)
@@ -108,15 +124,19 @@ plot([(NMdls*2)+.5 (NMdls*2)+.5],[0 1],'k','LineWidth',2)
 ylabel({'Proportion of empirical','connections captured'})
 set(gca,'FontSize',20)
 Spos1 = gcf().Position;
-ScatterPlotWidth = round((300/96)*Spos(3));
+ScatterPlotWidth = round((TARGET_DPI/96)*Spos(3));
 DesiredWidth = ScatterPlotWidth*3;
 SaveRes = round(96*(DesiredWidth/Spos1(3)));
 
 set(gca,'Position',[0.0990    0.1100    0.8815    0.8150])
 
-AddLetters2Plots(gcf, {PLOTLABELS{4}},'HShift',-.09, 'VShift', -.05,'FontSize',36)
+AddLetters2Plots(gcf, {PLOTLABELS{PlotIND}},'HShift',-.09, 'VShift', -.05,'FontSize',36)
 
-print(['./figures/',SAVEDIR,'/DistThr.png'],'-dpng',['-r',num2str(SaveRes)])
+FigureOutputLocs{PlotIND} = ['./figures/',SAVEDIR,'/DistThr.png'];
+
+print(FigureOutputLocs{PlotIND},'-dpng',['-r',num2str(SaveRes)])
+
+PlotIND=PlotIND+1;
 
 %%
 
@@ -127,13 +147,137 @@ for i = 1:NMdls
     %ss(i) = scatter(-1,-1,100,cmap(i,:),'filled');
     ss(i) = plot(nan, nan,'Color','none','MarkerSize', 15,'Marker','o','MarkerFaceColor',cmap(i,:));
 end
+if NMdls == 10
 leg = legend(ss,Mdl_names,'Orientation','Horizontal','Location','northoutside','FontSize',16,'NumColumns',5,'Box','off');
+leg.Position=[-0.0022    0.1870    1.0007    0.6964];
+else
+leg = legend(ss,Mdl_names,'Orientation','Horizontal','Location','northoutside','FontSize',16,'NumColumns',6,'Box','off');
+end
 box off
 axis off
 %leg.Position=[-0.0056    0.2741    1.0001    0.4906];
-leg.Position=[-0.0022    0.1870    1.0007    0.6964];
 
-print(['./figures/',SAVEDIR,'/LEGEND.png'],'-dpng',['-r',num2str(SaveRes)])
+LegendOutputLoc = ['./figures/',SAVEDIR,'/LEGEND.png'];
+
+print(LegendOutputLoc,'-dpng',['-r',num2str(SaveRes)])
+
+
+%%
+if ndims(R) == 4
+
+for ConType = 1:3
+figure('Position',[1 100 1385 514])
+data = cell(NMdls*4,1);
+for i = 1:NMdls
+data{i} = squeeze(R(i,:,1,ConType));
+data{i+NMdls} = squeeze(R(i,:,2,ConType));
+data{i+(NMdls*2)} = squeeze(R(i,:,3,ConType));
+data{i+(NMdls*3)} = squeeze(R(i,:,4,ConType));
+end
+jittercamp = repmat(cmap,4,1);
+JitterPlot(data,jittercamp,1)
+xticks([(1+NMdls)/2 ((NMdls+1)+(NMdls*2))/2 ((NMdls*2+1)+(NMdls*3))/2 ((NMdls*3+1)+(NMdls*4))/2])
+xticklabels({'Overall','Short-range (<30mm)','Mid-range (30-90mm)','Long-range (>90mm)'})
+clear ss
+for i = 1:NMdls
+    ss(i) = scatter(-1,-1,50,cmap(i,:),'filled');
+end
+xlim([0.5 (NMdls*4)+.5])
+hold on
+ylimits = ylim;
+plot([NMdls+.5 NMdls+.5],[0 1],'k','LineWidth',2)
+plot([(NMdls*2)+.5 (NMdls*2)+.5],[0 1],'k','LineWidth',2)
+plot([(NMdls*3)+.5 (NMdls*3)+.5],[0 1],'k','LineWidth',2)
+
+if ConType == 1
+ylabel({'Proportion of empirical','connections captured'})
+elseif ConType == 2
+ylabel({'Proportion of empirical','inter-hemispheric','connections captured'})
+elseif ConType == 3
+ylabel({'Proportion of empirical','intra-hemispheric','connections captured'})
+end
+
+set(gca,'FontSize',20)
+Spos1 = gcf().Position;
+ScatterPlotWidth = round((TARGET_DPI/96)*Spos(3));
+DesiredWidth = ScatterPlotWidth*3;
+SaveRes = round(96*(DesiredWidth/Spos1(3)));
+
+set(gca,'Position',[0.1120    0.1100    0.8685    0.8150])
+
+AddLetters2Plots(gcf, {PLOTLABELS{PlotIND}},'HShift',-.11, 'VShift', -.05,'FontSize',36)
+
+FigureOutputLocs{PlotIND} = ['./figures/',SAVEDIR,'/DistThr_ConnType',num2str(ConType),'.png'];
+
+print(FigureOutputLocs{PlotIND},'-dpng',['-r',num2str(SaveRes)])
+
+PlotIND=PlotIND+1;
+
+
+end
+
+end
+
+%%
+NConType = size(R,4);
+
+for ConType = 1:NConType
+
+figure('Position',[1 100 1385 514])
+
+data = cell(NMdls*4,1);
+for i = 1:NMdls
+data{i} = squeeze(EdgeFDR(i,:,1,ConType));
+data{i+NMdls} = squeeze(EdgeFDR(i,:,2,ConType));
+data{i+(NMdls*2)} = squeeze(EdgeFDR(i,:,3,ConType));
+data{i+(NMdls*3)} = squeeze(EdgeFDR(i,:,4,ConType));
+end
+jittercamp = repmat(cmap,4,1);
+JitterPlot(data,jittercamp,1)
+xticks([(1+NMdls)/2 ((NMdls+1)+(NMdls*2))/2 ((NMdls*2+1)+(NMdls*3))/2 ((NMdls*3+1)+(NMdls*4))/2])
+xticklabels({'Overall','Short-range (<30mm)','Mid-range (30-90mm)','Long-range (>90mm)'})
+clear ss
+for i = 1:NMdls
+    ss(i) = scatter(-1,-1,50,cmap(i,:),'filled');
+end
+xlim([0.5 (NMdls*4)+.5])
+hold on
+ylimits = ylim;
+plot([NMdls+.5 NMdls+.5],[0 1],'k','LineWidth',2)
+plot([(NMdls*2)+.5 (NMdls*2)+.5],[0 1],'k','LineWidth',2)
+plot([(NMdls*3)+.5 (NMdls*3)+.5],[0 1],'k','LineWidth',2)
+
+if ConType == 1
+ylabel({'Connection false discovery rate'})
+elseif ConType == 2
+ylabel({'Inter-hemispheric connection','false discovery rate'})
+elseif ConType == 3
+ylabel({'Intra-hemispheric connection','false discovery rate'})
+end
+
+
+set(gca,'FontSize',20)
+set(gca,'Position',[0.1120    0.1100    0.8685    0.8150])
+
+
+AddLetters2Plots(gcf, {PLOTLABELS{PlotIND}},'HShift',-.11, 'VShift', -.05,'FontSize',36)
+
+Spos1 = gcf().Position;
+
+ScatterPlotWidth = round((TARGET_DPI/96)*Spos(3));
+
+DesiredWidth = ScatterPlotWidth*3;
+
+SaveRes = round(96*(DesiredWidth/Spos1(3)));
+
+FigureOutputLocs{PlotIND} = ['./figures/',SAVEDIR,'/FP_DistThr_ConnType',num2str(ConType),'.png'];
+
+print(FigureOutputLocs{PlotIND},'-dpng',['-r',num2str(SaveRes)])
+
+PlotIND=PlotIND+1;
+
+end
+
 
 %%
 
