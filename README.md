@@ -12,5 +12,9 @@ plotSurfaceROIBoundary (only for makign the plots of degrees spatial embedding
 TO DO
 
 Some variables names are inconsistent across files
+
 Sort code into appropriate subfolders
+
 Add headers to function
+
+Put all the raw processed data somewhere (many GB)
