@@ -1,4 +1,4 @@
-function [maxKS,EdgeOverlap,TND,maxRMSE,maxRd,TFdiff,TFdiffnc,TopoCorrs,RMSE] = CalcEvalStats(A,B,ANetStats,BNetStats,AvgMean)
+function [maxKS,EdgeOverlap,TND,maxRMSE,maxRd,TFdiff,TFdiffnc,TopoCorrs,RMSE,KS] = CalcEvalStats(A,B,ANetStats,BNetStats,AvgMean)
 
 %% Get maxKS
 

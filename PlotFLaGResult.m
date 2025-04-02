@@ -1,1 +1,0 @@
-function PlotFlaGResult(BestFeature,F1,F2,PlotLabel)

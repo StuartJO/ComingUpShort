@@ -1,0 +1,1 @@
+magick montage -mode concatenate -tile 5x2 SuppALL_* TEST.png

@@ -1,3 +1,5 @@
+% This code just makes up some distributions to plot to make examples of
+% what CDFs look like and show how maxKS works
 
 % EMP{1} = randi(50,50,1);
 % MDL{1} = randi(48,50,1);
