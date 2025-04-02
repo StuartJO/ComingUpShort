@@ -226,7 +226,7 @@ for s = 1:length(SchUse)
         [denOUT,xout] =  ksdensity(xs,ksdenvals_x,'Support','positive'); 
     end
 
-plot(xout,denOUT,'Color',cmap(SchUse(s),:),'LineWidth',2)
+plot(xout,denOUT./sum(denOUT),'Color',cmap(SchUse(s),:),'LineWidth',2)
 
 end
 
@@ -261,7 +261,7 @@ for s = 1:length(SchUse)
         [denOUT,xout] =  ksdensity(y(s,:),ksdenvals_y,'Support','positive'); 
     end
 
-plot(denOUT,xout,'Color',cmap(SchUse(s),:),'LineWidth',2)
+plot(denOUT./sum(denOUT),xout,'Color',cmap(SchUse(s),:),'LineWidth',2)
 end
 
 %set(gca,'YScale','log')
