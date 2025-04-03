@@ -111,7 +111,9 @@ save('./data/Scha400_SArand.mat','C');
 C = SA_corr;
 save('./data/Scha400_SArand_LR.mat','C','RAND_SMOOTH_L','RAND_SMOOTH_R');
 ```
+
 When I first ran all the models, it was just for a single hemisphere, and I did not save the random spatially autocorrelated data I generated (but I did save the correlation matrix). When it came time to do the whole-brain analysis, I just made a new one (and saved everything this time!)
+
 --
 TO DO
 
