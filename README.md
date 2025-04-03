@@ -124,3 +124,5 @@ Sort code into appropriate subfolders
 Add headers to function
 
 Put all the raw processed data somewhere (many GB)
+
+Get the WB GNM code from MASSIVE
