@@ -40,7 +40,7 @@ sub2use = [1:298 300:973];
 
 EmpFit(:,1) = triu2vec(EmpFitInput.maxKS(sub2use,sub2use),1);
 EmpFit(:,2) = triu2vec(EmpFitInput.maxRMSE(sub2use,sub2use),1);
-EmpFit(:,3) = triu2vec(EmpFitInput.rd(sub2use,sub2use),1);
+EmpFit(:,3) = triu2vec(EmpFitInput.maxRd(sub2use,sub2use),1);
 EmpFit(:,4) = triu2vec(EmpFitInput.TND(sub2use,sub2use),1);
 EmpFit(:,5) = triu2vec(EmpFitInput.TFdiff(sub2use,sub2use),1);
 EmpFit(:,6) = triu2vec(EmpFitInput.DegCorr(sub2use,sub2use),1);

@@ -265,7 +265,7 @@ nNets = length(b);
 MdlOutput.EdgeOverlap = zeros(nNets,n_subs,4);
 MdlOutput.TND = zeros(nNets,n_subs);
 MdlOutput.maxRMSE = zeros(nNets,n_subs);
-MdlOutput.rd = zeros(nNets,n_subs);
+MdlOutput.maxRd = zeros(nNets,n_subs);
 MdlOutput.TFdiff = zeros(nNets,n_subs);
 MdlOutput.TFdiffnc = zeros(nNets,n_subs);
 
