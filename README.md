@@ -1,7 +1,9 @@
 # ComingUpShort
- Code for my paper "Coming up short", coming soon to a journal near you
+Code and data for my paper "Coming up short", coming soon to a journal near you
 
 This repository contains the code to do all the analysis and all the figure generation.
+
+Some of the data is provided in the present repository, but all the data required can be downloaded from [here]() 
 
 Requirements:
 
@@ -28,7 +30,7 @@ for form = 1:2
  for form = 1:2
     for expo = 1:2
         for mdl = 1:12
-            run_fitGNM(mdl,form,expo)
+            run_fitGNM_topology(mdl,form,expo)
         end
     end
  end
@@ -41,7 +43,7 @@ for mdl = 1:10
     run_fitGNM_WB(mdl,2,2)
 end
 ```
-Note that running it this way will take an exceptionally long time as it takes 2.5 hours minimum for one model to fit. And there are 104 models being run.
+Note that running it this way will take an exceptionally long time as it takes 2.5 hours _minimum_ for one model to fit. And there are 104 models being run.
 
 ### Empirical network similarity
 
@@ -55,7 +57,6 @@ To then extract the needed data from the raw model outputs run:
 ```
 GetBestResults.m
 ```
-
 
 ### Network rewiring
 
@@ -72,7 +73,7 @@ Figures can all* be remade by running the following script:
 MakeFigures
 ```
 
-*<sup><sub>It won't make Figures 1,3 and S6 but will make some of the elements you need to make those plots</sub></sup>
+*<sup><sub>It won't make Figures 1, 3, and S6 but will make some of the elements you need to make those plots</sub></sup>
 
 ## Preprocessing the data
 
@@ -102,6 +103,15 @@ To get the Euclidean distances between parcels of the Schaefer parcellations run
 GetScha7Dist
 ```
 
+To get the random spatially autocorrelated maps, do
+```
+makeRandomSAmap
+C = SA_corr(1:200,1:200);
+save('./data/Scha400_SArand.mat','C');
+C = SA_corr;
+save('./data/Scha400_SArand_LR.mat','C','RAND_SMOOTH_L','RAND_SMOOTH_R');
+```
+When I first ran all the models, it was just for a single hemisphere, and I did not save the random spatially autocorrelated data I generated (but I did save the correlation matrix). When it came time to do the whole-brain analysis, I just made a new one (and saved everything this time!)
 --
 TO DO
 

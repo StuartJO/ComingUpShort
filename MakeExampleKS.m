@@ -26,6 +26,6 @@ xlimits = xlim;
 set(gca,'FontSize',24)
 xlim(xlimits)
 set(gca, 'LineWidth',1.5)
-print(['ExampleKS',num2str(i),'.png'],'-dpng','-r300')
+print(['./figures/ExampleKS',num2str(i),'.png'],'-dpng','-r300')
 close all
 end

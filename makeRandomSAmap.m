@@ -79,4 +79,4 @@ for F = 1:nFeatures
 end
 
 %% Compute correlation between LH and RH smoothed random values
-C = corr([RAND_SMOOTH_L, RAND_SMOOTH_R], 'Type', 'Pearson');
+SA_corr = corr([RAND_SMOOTH_L, RAND_SMOOTH_R], 'Type', 'Pearson');
