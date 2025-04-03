@@ -2,7 +2,7 @@ function [FigureOutputLocs,LegendOutputLoc] = PlotFLaGResult(Features2Plot,PlotL
 
 load('GNM_FLaG_BestResults.mat','MdlBestFitIndv','EmpFit','Mdl_names','MdlBestFitAll')
 
-FitName = {'max(\itKS\rm)','max(\itRMSE\rm)','max(\itr_d\rm )','\itTND','\itTF_{diff }','Degree correlation','Connection overlap (Jaccard)'};
+FitName = {'max(\itKS\rm)','max(\itRMSE\rm)','max(\itr_d\rm )','\itTND','\itTF_{diff }','Degree correlation','Connection overlap (\itJ\rm)'};
 
 cmap = [0.5 0.5 0.5; lines(7); 0.6941 0.3490 0.1569; [251,154,153]./255];
 cmap2 = [0 0 0; cmap];
