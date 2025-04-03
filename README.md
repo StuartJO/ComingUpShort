@@ -4,8 +4,11 @@
 This repository contains the code to do all the analysis and all the figure generation.
 
 Requirements:
+
 [MATLAB R2023b](https://au.mathworks.com/products/new_products/release2023b.html)
+
 [ImageMagick](https://imagemagick.org/index.php)(not required per se, but to make all the combined plots it is very much needed) 
+
 [plotSurfaceROIBoundary](https://github.com/StuartJO/plotSurfaceROIBoundary) (only for making the plots of degrees spatial embedding)
 
 ## Rerunning analysis
