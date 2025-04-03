@@ -87,6 +87,7 @@ FitMeasures.TND = zeros(repeats,numIterations);
 FitMeasures.maxRMSE = zeros(repeats,numIterations);
 FitMeasures.TFdiff = zeros(repeats,numIterations);
 FitMeasures.maxRd = zeros(repeats,numIterations);
+FitMeasures.DegCorr = zeros(repeats,numIterations);
 
 EdgeOverlap = zeros(repeats,numIterations);
 FitMeasures.KS = zeros(repeats,numIterations,4);
@@ -156,8 +157,8 @@ end
 
         BNetStats = CalcNetStats4Eval(B,D);
 
-        [FitMeasures.maxKS(repeat,iteration),~,FitMeasures.TND(repeat,iteration),FitMeasures.maxRMSE(repeat,iteration),FitMeasures.maxRd(repeat,iteration),FitMeasures.TFdiff(repeat,iteration),~,TopoCorrs,~,FitMeasures.KS(repeat,iteration,:)] = CalcEvalStats(A,B,ANetStats,BNetStats,0);
-        FitMeasures.DegCorr(repeat,iteration) = TopoCorrs(1);
+        [FitMeasures.maxKS(repeat,iteration),~,FitMeasures.TND(repeat,iteration),FitMeasures.maxRMSE(repeat,iteration),FitMeasures.maxRd(repeat,iteration),FitMeasures.TFdiff(repeat,iteration),~,~,~,FitMeasures.KS(repeat,iteration,:)] = CalcEvalStats(A,B,ANetStats,BNetStats,0);
+        FitMeasures.DegCorr(repeat,iteration) = corr(A_vals{1},sum(B,2),'type','Spearman');
         AB = B.*A;
         EdgeOverlap(repeat,iteration) = (nnz(AB)/2)/totalEdges;
 

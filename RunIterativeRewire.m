@@ -13,4 +13,4 @@ for i = 1:5
 
 end
 
-save('Hansen400_rewirings.mat','EdgeOverlap','maxKS','KS','TopoMeasures')
+save('Network_rewirings.mat','EdgeOverlap','maxKS','KS','TopoMeasures')

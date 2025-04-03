@@ -20,7 +20,7 @@ for i = 1:2
     addmult = AddMult{i};
     for j = 1:2     
         expo = exponent{j};
-        for mdl = 1
+        for mdl = 0:7
 
 Output = load(['C:\Users\Stuart\Documents\GitHub\ComingUpShort\outputs\old\Hansen_Timing_0_Mdl',num2str(mdl),'_',addmult,'_',expo,'.mat']);
 
@@ -127,7 +127,7 @@ MdlOutput.BestFit.DegCorr.maxRd = bestDegCorr_rd;
 MdlOutput.BestFit.DegCorr.TFdiff = bestDegCorr_TFdiff;
 MdlOutput.BestFit.DegCorr.TFdiffnc = bestDegCorr_TFdiffnc;
 
-save(['./outputs/GNM_Mdl',num2str(mdl),'_',addmult,'_',expo,'.mat'],'-struct','MdlOutput','-v7.3')
+save(['./outputs/GNM_Mdl',num2str(mdl+1),'_',addmult,'_',expo,'.mat'],'-struct','MdlOutput','-v7.3')
 
         end
 
@@ -252,7 +252,7 @@ MdlOutput.BestFit.DegCorr.maxRd = bestDegCorr_rd;
 MdlOutput.BestFit.DegCorr.TFdiff = bestDegCorr_TFdiff;
 MdlOutput.BestFit.DegCorr.TFdiffnc = bestDegCorr_TFdiffnc;
 
-save(['./outputs/GNM_Mdl',num2str(8),'_',addmult,'_',expo,'.mat'],'-struct','MdlOutput','-v7.3')
+save(['./outputs/GNM_Mdl',num2str(9),'_',addmult,'_',expo,'.mat'],'-struct','MdlOutput','-v7.3')
 
         end
 
