@@ -2,3 +2,6 @@
 /Animations/
 /figures/*/
 /data/Schaefer_nsb
+/data/raw_output
+/data/emp_sim_results
+/data/compiled_outputs/GNM_FLaG_BestResults.mat

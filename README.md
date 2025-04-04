@@ -125,6 +125,8 @@ When I first ran all the models, it was just for a single hemisphere, and I did 
 --
 TO DO
 
-Add headers to function
+Add headers to functions
 
 Put all the raw processed data somewhere (many GB)
+
+Make it so the functions automatically save data to subdirectories
