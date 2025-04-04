@@ -15,7 +15,7 @@ rewiring_name = {'Random','Short','Long','Short-dissimilar','Long-dissimilar'};
 
 KScolors = lines(4);
 
-load('Hansen400_rewirings.mat')
+load('Network_rewirings.mat')
 
 
 FtypeName = {'max\it{(KS)}','max\it{(RMSE)}','max\it{(r_d )}','\it{TND}','\it{TF_{diff}}'};
