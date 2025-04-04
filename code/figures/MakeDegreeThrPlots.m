@@ -22,7 +22,7 @@ ax.LineWidth = 2;
 hold on
 scatter([30 60 90],C([30 60 90]),50,'k','filled')
 
-exportgraphics(gcf,['./figures/DegThr.png'],'resolution',300)
+exportgraphics(gcf,['./figures/DegThr/DegThr.png'],'resolution',300)
 figure
 s = scatterfit(deg',deg_thr(30,:)',100,[227 26 28]./255,' ',1,24);
 xlabel('Full empirical degree')
@@ -30,7 +30,7 @@ ylabel('Thresholded degree')
 xticks(0:10:50)
 ax = gca;
 ax.LineWidth = 2;
-print(['./figures/DegThr30Scatter.png'],'-dpng','-r300')
+print(['./figures/DegThr/DegThr30Scatter.png'],'-dpng','-r300')
 
 figure
 s = scatterfit(deg',deg_thr(60,:)',100,[227 26 28]./255,' ',1,24);
@@ -39,7 +39,7 @@ ylabel('Thresholded degree')
 xticks(0:10:50)
 ax = gca;
 ax.LineWidth = 2;
-print(['./figures/DegThr60Scatter.png'],'-dpng','-r300')
+print(['./figures/DegThr/DegThr60Scatter.png'],'-dpng','-r300')
 
 figure
 s = scatterfit(deg',deg_thr(90,:)',100,[227 26 28]./255,' ',1,24);
@@ -48,7 +48,7 @@ ylabel('Thresholded degree')
 xticks(0:10:50)
 ax = gca;
 ax.LineWidth = 2;
-print(['./figures/DegThr90Scatter.png'],'-dpng','-r300')
+print(['./figures/DegThr/DegThr90Scatter.png'],'-dpng','-r300')
 
 load('fsaverage_surface_data.mat')
 
@@ -71,12 +71,12 @@ view([-90 0])
 axis off
 axis image
 
-print('./figures/Deg_lat_thr_0.png','-dpng')
+print('./figures/DegThr/Deg_lat_thr_0.png','-dpng')
 
 view([90 0])
-print('./figures/Deg_med_thr_0.png','-dpng')
+print('./figures/DegThr/Deg_med_thr_0.png','-dpng')
 
-system([ImgMagLoc,' montage ./figures/Deg_lat_thr_',num2str(0),'.png ./figures/Deg_med_thr_',num2str(0),'.png -geometry +2+1 -tile 2x1 ./figures/Degthr',num2str(0),'.png']);
+system([ImgMagLoc,' montage ./figures/DegThr/Deg_lat_thr_',num2str(0),'.png ./figures/DegThr/Deg_med_thr_',num2str(0),'.png -geometry +2+1 -tile 2x1 ./figures/DegThr/Degthr',num2str(0),'.png']);
 
 for i = [30 60 90]
 
@@ -85,12 +85,12 @@ FaceVertexCData = makeFaceVertexCData(lh_inflated_verts,lh_faces,parc,DegData,br
 set(p_left,'FaceVertexCData',FaceVertexCData,'EdgeColor','none','FaceColor','flat','Clipping','off');
 
 view([-90 0])
-print(['./figures/Deg_lat_thr_',num2str(i),'.png'],'-dpng')
+print(['./figures/DegThr/Deg_lat_thr_',num2str(i),'.png'],'-dpng')
 
 view([90 0])
-print(['./figures/Deg_med_thr_',num2str(i),'.png'],'-dpng')
+print(['./figures/DegThr/Deg_med_thr_',num2str(i),'.png'],'-dpng')
 
-system([ImgMagLoc,' montage ./figures/Deg_lat_thr_',num2str(i),'.png ./figures/Deg_med_thr_',num2str(i),'.png -geometry +2+1 -tile 2x1 ./figures/Degthr',num2str(i),'.png']);
+system([ImgMagLoc,' montage ./figures/DegThr/Deg_lat_thr_',num2str(i),'.png ./figures/DegThr/Deg_med_thr_',num2str(i),'.png -geometry +2+1 -tile 2x1 ./figures/DegThr/Degthr',num2str(i),'.png']);
 
 end
 
@@ -112,7 +112,7 @@ ax.LineWidth = 2;
 hold on
 scatter([30 60 90],C([30 60 90]),50,'k','filled')
 
-exportgraphics(gcf,['./figures/RevDegThr.png'],'resolution',300)
+exportgraphics(gcf,['./figures/DegThr/RevDegThr.png'],'resolution',300)
 
 figure
 s = scatterfit(deg',deg_thr(30,:)',100,[227 26 28]./255,' ',1,24);
@@ -121,7 +121,7 @@ ylabel('Thresholded degree')
 xticks(0:10:50)
 ax = gca;
 ax.LineWidth = 2;
-print(['./figures/RevDegThr30Scatter.png'],'-dpng','-r300')
+print(['./figures/DegThr/RevDegThr30Scatter.png'],'-dpng','-r300')
 
 figure
 s = scatterfit(deg',deg_thr(60,:)',100,[227 26 28]./255,' ',1,24);
@@ -130,7 +130,7 @@ ylabel('Thresholded degree')
 xticks(0:10:50)
 ax = gca;
 ax.LineWidth = 2;
-print(['./figures/RevDegThr60Scatter.png'],'-dpng','-r300')
+print(['./figures/DegThr/RevDegThr60Scatter.png'],'-dpng','-r300')
 
 figure
 s = scatterfit(deg',deg_thr(90,:)',100,[227 26 28]./255,' ',1,24);
@@ -139,7 +139,7 @@ ylabel('Thresholded degree')
 xticks(0:10:50)
 ax = gca;
 ax.LineWidth = 2;
-print(['./figures/RevDegThr90Scatter.png'],'-dpng','-r300')
+print(['./figures/DegThr/RevDegThr90Scatter.png'],'-dpng','-r300')
 
 load('fsaverage_surface_data.mat')
 
@@ -162,12 +162,12 @@ view([-90 0])
 axis off
 axis image
 
-print('./figures/RevDeg_lat_thr_0.png','-dpng')
+print('./figures/DegThr/RevDeg_lat_thr_0.png','-dpng')
 
 view([90 0])
-print('./figures/RevDeg_med_thr_0.png','-dpng')
+print('./figures/DegThr/RevDeg_med_thr_0.png','-dpng')
 
-system([ImgMagLoc,' montage ./figures/RevDeg_lat_thr_',num2str(0),'.png ./figures/RevDeg_med_thr_',num2str(0),'.png -geometry +2+1 -tile 2x1 ./figures/RevDegthr',num2str(0),'.png']);
+system([ImgMagLoc,' montage ./figures/DegThr/RevDeg_lat_thr_',num2str(0),'.png ./figures/DegThr/RevDeg_med_thr_',num2str(0),'.png -geometry +2+1 -tile 2x1 ./figures/DegThr/RevDegthr',num2str(0),'.png']);
 
 
 for i = [30 60 90]
@@ -179,11 +179,11 @@ FaceVertexCData = makeFaceVertexCData(lh_inflated_verts,lh_faces,parc,DegData,br
 set(p_left,'FaceVertexCData',FaceVertexCData,'EdgeColor','none','FaceColor','flat','Clipping','off');
 
 view([-90 0])
-print(['./figures/RevDeg_lat_thr_',num2str(i),'.png'],'-dpng')
+print(['./figures/DegThr/RevDeg_lat_thr_',num2str(i),'.png'],'-dpng')
 
 view([90 0])
-print(['./figures/RevDeg_med_thr_',num2str(i),'.png'],'-dpng')
+print(['./figures/DegThr/RevDeg_med_thr_',num2str(i),'.png'],'-dpng')
 
-system([ImgMagLoc,' montage ./figures/RevDeg_lat_thr_',num2str(i),'.png ./figures/RevDeg_med_thr_',num2str(i),'.png -geometry +2+1 -tile 2x1 ./figures/RevDegthr',num2str(i),'.png']);
+system([ImgMagLoc,' montage ./figures/DegThr/RevDeg_lat_thr_',num2str(i),'.png ./figures/DegThr/RevDeg_med_thr_',num2str(i),'.png -geometry +2+1 -tile 2x1 ./figures/DegThr/RevDegthr',num2str(i),'.png']);
 
 end

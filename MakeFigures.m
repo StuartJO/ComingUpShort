@@ -173,3 +173,5 @@ FIGURES2ADD = [FLAG2{1},' ',FLAG2{2},' ',FLAG2{3},' ',FLAG2{4},' ',FLAG2{5},' ',
 system([ImgMagLoc,' montage ',FIGURES2ADD,' -tile 4x2 -geometry +0+0 miff:- | magick convert - ',FLAG2_leg,' -append ./figures/Figure8.png']);
 
 %%
+
+MakeDegreeThrPlots
