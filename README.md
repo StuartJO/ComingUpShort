@@ -76,7 +76,7 @@ Figures can all* be remade by running the following script:
 MakeFigures
 ```
 
-*<sup><sub>It won't make Figures 1, 3, and S6 but will make some of the elements you need to make those plots</sub></sup>
+*<sup><sub>It won't make Figures 1, 3, and S8 but will make some of the elements you need to make those plots</sub></sup>
 
 ## Preprocessing the data
 
