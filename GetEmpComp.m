@@ -46,8 +46,8 @@ for i = 1:n_sub-1
  [maxKS(i,j,s),EdgeOverlap,TND(i,j,s),maxRMSE(i,j,s),maxRd(i,j,s),TFdiff(i,j,s),TFdiffnc(i,j,s),TopoCorrs] = CalcEvalStats(A{i},A{j},NetStats4Eval{i},NetStats4Eval{j},1);              
        
     maxKS(j,i,s)=maxKS(i,j,s);
-    DegCorr(j,i,s)=TopoCorrs(1);
-    DegCorr(i,j,s)=TopoCorrs(1);
+    DegCorr(j,i,s)= corr(NetStats4Eval{i}.NodeMeasures(:,1),NetStats4Eval{j}.NodeMeasures(:,1),'Type','Spearman');
+    DegCorr(i,j,s)=DegCorr(j,i,s);
     TFdiff(j,i,s) = TFdiff(i,j,s);
     TFdiffnc(j,i,s) = TFdiffnc(i,j,s);
     TND(j,i,s) = TND(i,j,s);
