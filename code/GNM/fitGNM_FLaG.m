@@ -207,7 +207,7 @@ n = length(A_dist);
 
 if ~exist(Input.SaveName_temp,'file')
 disp('Running model!')
-[maxKS,KS,P,b,DegCorr,Input,bvals] = VoronoinLandScape_GNMFLaG(adjs,A_dist,PDMs,m,Input);
+[maxKS,KS,P,b,DegCorr,Input,bvals] = VoronoinLandScape_GNM_FLaG(adjs,A_dist,PDMs,m,Input);
 
 MdlOutput.maxKS = maxKS;
 MdlOutput.DegCorr = DegCorr;

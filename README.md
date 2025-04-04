@@ -1,5 +1,5 @@
 # ComingUpShort
-Code and data for my paper "Coming up short", coming soon to a journal near you
+Code and data for my paper ["Coming up short"](https://www.biorxiv.org/content/10.1101/2024.11.18.624192v1.full), coming soon to a journal near you
 
 This repository contains the code to do all the analysis and all the figure generation.
 
@@ -12,6 +12,8 @@ Requirements:
 [ImageMagick](https://imagemagick.org/index.php)(not required per se, but to make all the combined plots it is very much needed) 
 
 [plotSurfaceROIBoundary](https://github.com/StuartJO/plotSurfaceROIBoundary) (only for making the plots of degrees spatial embedding)
+
+If you use this code please cite me :)
 
 ## Rerunning analysis
 
@@ -55,7 +57,8 @@ GetEmpComp
 
 To then extract the needed data from the raw model outputs run:
 ```
-GetBestResults.m
+GetBestResults
+GetBestEmpFLaG
 ```
 
 ### Network rewiring
@@ -98,6 +101,11 @@ The individual networks were processed as part of the following two papers:
 
 It is all provided now in the data download. 
 
+To get this data into the format needed, run:
+```
+GetScha400_Indv
+```
+
 To get the Euclidean distances between parcels of the Schaefer parcellations run
 ```
 GetScha7Dist
@@ -116,8 +124,6 @@ When I first ran all the models, it was just for a single hemisphere, and I did 
 
 --
 TO DO
-
-Some variables names are inconsistent across files
 
 Add headers to function
 

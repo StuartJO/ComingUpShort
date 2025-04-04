@@ -1,5 +1,6 @@
 
 ImgMagLoc = '"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI/magick.exe"';
+addpath(genpath('./'))
 
 %%
 
@@ -45,10 +46,10 @@ GNMDegCorr{4} = PlotGNMPerformance('BestMdls_GNM_DegCorr_Mult_powerlaw.mat',{'J'
 
 FIGURES2ADD = [GNMDegCorr{1}{1},' ',GNMDegCorr{1}{2},' ',GNMDegCorr{1}{3},' ',GNMDegCorr{2}{1},' ',GNMDegCorr{2}{2},' ',GNMDegCorr{2}{3},' ',GNMDegCorr{3}{1},' ',GNMDegCorr{3}{2},' ',GNMDegCorr{3}{3},' ',GNMDegCorr{4}{1},' ',GNMDegCorr{4}{2},' ',GNMDegCorr{4}{3}];
 
-system([ImgMagLoc,' montage ',FIGURES2ADD,' -tile 3x4 -geometry +0+0 miff:- | magick convert - ',LgdLocTopo,' -append ./figures/FigureS7.png']);
+system([ImgMagLoc,' montage ',FIGURES2ADD,' -tile 3x4 -geometry +0+0 miff:- | magick convert - ',LgdLocTopo,' -append ./figures/FigureS6.png']);
 
 FIGURES2ADD = [GNMDegCorr{1}{4},' ',GNMDegCorr{2}{4},' ',GNMDegCorr{3}{4},' ',GNMDegCorr{4}{4},' ',LgdLoc];
-system([ImgMagLoc,' montage ',FIGURES2ADD,' -tile 1x5 -geometry +0+0 ./figures/FigureS8.png']);
+system([ImgMagLoc,' montage ',FIGURES2ADD,' -tile 1x5 -geometry +0+0 ./figures/FigureS7.png']);
 
 close all
 

@@ -27,6 +27,6 @@ end
 
 A_dist = Adist + Adist';
 
-save(['Scha',num2str(SchSize(s)),'_EucDist_lh.mat'],'A_dist')
+save(['./data/Schaefer7_dist/Scha',num2str(SchSize(s)),'_EucDist_lh.mat'],'A_dist')
 
 end

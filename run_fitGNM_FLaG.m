@@ -4,7 +4,7 @@ addpath(genpath('./'))
 
 mdldata = load('Hansen_networks.mat');
 
-load('Scha400_7_lh_Thr70.mat')
+load('Indv_Scha400_7_lh_Thr70.mat')
 
 A_dist = mdldata.A_dist;
 
@@ -112,7 +112,7 @@ end
     disp(['Running model EmpFLaG_Mdl',num2str(i),'_',AddMult,'_',Input.PDMfunc{1}])  
     Input.SaveName_temp = ['EmpFLaG_Mdl',num2str(i),'_',AddMult,'_',Input.PDMfunc{1},'_temp.mat'];
 
-    Output = GenMdlFast_FLaG2(THR,A_dist,PDMs,Input);
+    Output = fitGNM_FLaG(THR,A_dist,PDMs,Input);
     Output.PDMs = PDMs;
     save(['EmpFLaG_Mdl',num2str(i),'_',AddMult,'_',Input.PDMfunc{1},'.mat'],'-struct','Output','-v7.3')
 
