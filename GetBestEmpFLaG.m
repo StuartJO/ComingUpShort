@@ -49,4 +49,4 @@ EmpFit(:,7) = triu2vec(EmpFitInput.EdgeJaccard(sub2use,sub2use,4),1);
 
 Mdl_names = {'Spatial','Gene coexpression','Receptor similarity','Laminar similarity','Metabolic connectivity','Haemodynamic connectivity','Electrophysiological connectivity','Temporal similarity','Random similarity','Matching'};
 
-save('GNM_FLaG_BestResults.mat','EmpFit','MdlBestFitIndv','FitName','Mdl_names','MdlBestFitAll','-v7.3')
+save('./compiled_outputs/GNM_FLaG_BestResults.mat','EmpFit','MdlBestFitIndv','FitName','Mdl_names','MdlBestFitAll','-v7.3')

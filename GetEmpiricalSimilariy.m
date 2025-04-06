@@ -20,11 +20,11 @@ A = cell(n_sub,1);
 for s = 1:length(SchSize)
     tic
 if x == 2
-load(['Schaefer',num2str(SchSize(s)),'_7net_FACT_acpc_lh_wei.mat'])
+load(['./data/Schaefer_nsb/Schaefer',num2str(SchSize(s)),'_7net_FACT_acpc_lh_wei.mat'])
 else
-load(['Schaefer',num2str(SchSize(s)),'_7net_iFOD2_acpc_lh_wei.mat'])    
+load(['./data/Schaefer_nsb/Schaefer',num2str(SchSize(s)),'_7net_iFOD2_acpc_lh_wei.mat'])    
 end
-load(['Scha',num2str(SchSize(s)),'_EucDist_lh.mat'])
+load(['./data/Schaefer7_dist/Scha',num2str(SchSize(s)),'_EucDist_lh.mat'])
 
 N = SchSize(s)/2;
 
@@ -62,9 +62,9 @@ disp(num2str(s))
 toc
 end
 if x == 2
-    save('Schaefer_7net_FACT_acpc_lh_str70Thr_fitMetrics.mat','maxKS','DegCorr','TFdiffnc','TFdiff','maxRd','maxRMSE','TND','EdgeJaccard')
+    save('./data/emp_sim_results/Schaefer_7net_FACT_acpc_lh_str70Thr_fitMetrics.mat','maxKS','DegCorr','TFdiffnc','TFdiff','maxRd','maxRMSE','TND','EdgeJaccard')
 else
-    save('Schaefer_7net_iFOD2_acpc_lh_str70Thr_fitMetrics.mat','maxKS','DegCorr','TFdiffnc','TFdiff','maxRd','maxRMSE','TND','EdgeJaccard')
+    save('./data/emp_sim_results/Schaefer_7net_iFOD2_acpc_lh_str70Thr_fitMetrics.mat','maxKS','DegCorr','TFdiffnc','TFdiff','maxRd','maxRMSE','TND','EdgeJaccard')
 end
     end
 end

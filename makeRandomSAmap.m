@@ -8,6 +8,7 @@
 % 4. Projects these smoothed LH values onto the right hemisphere (RH) parcellation
 % 5. Calculates the correlation matrix between smoothed LH and RH random values.
 % 
+addpath(genpath('./'))
 
 %% Load fsaverage surface data (faces, vertices, and Schaefer 400 parcellation)
 load('fsaverage_surface_data.mat');   % Contains lh_faces, lh_verts, and lh_scha400 parcellation data

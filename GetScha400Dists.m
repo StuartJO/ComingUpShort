@@ -1,4 +1,4 @@
-load('fsaverage_surface_data.mat')
+load('./data/surface_data/fsaverage_surface_data.mat')
 
 verts = [lh_verts;rh_verts];
 
@@ -29,4 +29,4 @@ HemiDist = Adist_inc0(1,2:end)+Adist_inc0(1,2:end)';
 
 A_dist = [Adist_inc0_(2:end,2:end) HemiDist;HemiDist Adist_inc0_(2:end,2:end)];
 
-save('Scha400_EucDist_full.mat','A_dist')
+save('./data/Schaefer7_dist/Scha400_EucDist_full.mat','A_dist')

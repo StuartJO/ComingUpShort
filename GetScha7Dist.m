@@ -1,3 +1,5 @@
+load('./data/surface_data/fsaverage_surface_data.mat')
+
 SchSize = 100:100:400;
 
 for s = 1:length(SchSize)
