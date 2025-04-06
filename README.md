@@ -80,7 +80,15 @@ MakeFigures
 
 ## Preprocessing the data
 
-To get the original data for the biophysiological measures and grou[ consensus connectome] and configure it, please see this paper:
+
+### Euclidean distances
+To get the Euclidean distances between parcels of the Schaefer parcellations run
+```
+GetScha7Dist
+```
+
+### Group consensus network + biophysiological similarity measures
+To get the original data for the biophysiological measures and group consensus connectome and configure it, please see this paper:
 
 [Hansen JY, Shafiei G, Voigt K, Liang EX, Cox SML, Leyton M, et al. (2023) Integrating multimodal and multiscale connectivity blueprints of the human cerebral cortex in health and disease. PLoS Biol 21(9): e3002314. https://doi.org/10.1371/journal.pbio.3002314](https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.3002314)
 
@@ -92,7 +100,7 @@ Then run the following:
 ```
 GetHansenData
 ```
-
+### Individual networks
 The individual networks were processed as part of the following two papers:
 
 [Arnatkeviciute, A., Fulcher, B. D., Oldham, S., Tiego, J., Paquola, C., Gerring, Z., ... & Fornito, A. (2021). Genetic influences on hub connectivity of the human connectome. Nature communications, 12(1), 4237.](https://www.nature.com/articles/s41467-021-24306-2)
@@ -105,12 +113,7 @@ To get this data into the format needed, run:
 ```
 GetScha400_Indv
 ```
-
-To get the Euclidean distances between parcels of the Schaefer parcellations run
-```
-GetScha7Dist
-```
-
+### Random spatial autocorrelation similarity
 To get the random spatially autocorrelated maps, do
 ```
 makeRandomSAmap
@@ -128,5 +131,3 @@ TO DO
 Add headers to functions
 
 Put all the raw processed data somewhere (many GB)
-
-Make it so the functions automatically save data to subdirectories
