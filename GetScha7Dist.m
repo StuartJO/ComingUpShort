@@ -1,6 +1,6 @@
 load('./data/surface_data/fsaverage_surface_data.mat')
 
-SchSize = 100:100:400;
+SchSize = 100:100:1000;
 
 for s = 1:length(SchSize)
 
@@ -21,8 +21,8 @@ for i = 1:Nodes-1
     for j = i+1:Nodes
         Verts_j = verts(parc==j,:);
         
-        d = triu2vec(pdist2(Verts_i,Verts_j),1);
-        Adist(i,j) = mean(d);
+        d = pdist2(Verts_i,Verts_j);
+        Adist(i,j) = mean(d(:));
     end
     waitbar(i/(Nodes-1),f)
 end
