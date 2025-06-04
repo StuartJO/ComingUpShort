@@ -161,7 +161,6 @@ rng('shuffle')
 
 AddMult = Input.AddMult;
 PDMfunc = Input.PDMfunc;
-Timing = Input.Timing;
 
 if ~isfield(Input,'epsilon')
     Input.epsilon = 1e-6;
@@ -202,7 +201,7 @@ A_vals{2} = clustering_coef_bu(A);
 A_vals{3} = betweenness_bin(A)';
 A_vals{4} = A_dist(triu(A,1) > 0);
 
-ANetStats4Eval = CalcNetStats4Eval(A,A_dist,Avals);
+ANetStats4Eval = CalcNetStats4Eval(A,A_dist,A_vals);
 
 [~,Input.NNodes,m] = density_und(A); 
 

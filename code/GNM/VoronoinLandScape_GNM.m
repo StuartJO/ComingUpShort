@@ -23,7 +23,7 @@ function [maxKS,KS,P,b,DegCorr,Input] = VoronoinLandScape_GNM(A,A_dist,PDMs,m,In
 %
 %
 % m = the number of edges for the model to form. When doing a growth model
-% this should be a vector where each elemenet specifies the number of edges
+% this should be a vector where each element specifies the number of edges
 % which should be present in the network at the end of that timestep (it is
 % NOT the number of edges to form at each step, but rather the cumulative
 % edges). Can also be specified as the density value
@@ -183,6 +183,7 @@ end
 
 if iscell(A)
     A_vals = A;
+    ADeg = A_vals{1};
 else
     ADeg = sum(A,2);
     A_vals{1} = ADeg;
