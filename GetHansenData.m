@@ -1,3 +1,5 @@
+addpath(genpath('./'))
+
 SC = readmatrix('./data/Schaefer_hansen/consensusSC_wei.csv','NumHeaderLines',1);
 
 MAP_names = {'gene_coexpression','receptor_similarity','laminar_similarity','metabolic_connectivity','haemodynamic_connectivity','electrophysiological_connectivity','temporal_similarity'};

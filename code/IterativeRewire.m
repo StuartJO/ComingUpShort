@@ -106,12 +106,12 @@ end
         switch RewireOrder
             case {'shortest','longest','random'}
                 existingEdgeIdx = origEdges(ord(iteration));  
-                [row_existing, col_existing] = ind2sub(n,existingEdgeIdx);
+                [row_existing, col_existing] = ind2sub([n n],existingEdgeIdx);
             case 'any'
                 existingEdges = find(B);
                 ind = randi(length(existingEdges));
                 existingEdgeIdx = existingEdges(ind);
-                [row_existing, col_existing] = ind2sub(n,existingEdgeIdx);
+                [row_existing, col_existing] = ind2sub([n n],existingEdgeIdx);
                 B(row_existing, col_existing) = 0;
                 B(col_existing, row_existing) = 0;
         end
@@ -139,12 +139,12 @@ end
                 [~,Toswap] = datasample(nonexistingIdx,1,'Weights',wei./max(wei));
         end
 
-        [row_nonexisting, col_nonexisting] = ind2sub(n,nonexistingIdx(Toswap));
+        [row_nonexisting, col_nonexisting] = ind2sub([n n],nonexistingIdx(Toswap));
 
     else
         nonexistingIdx = find( (B+A_+I) == 0);
         Toswap = randi(length(nonexistingIdx));
-        [row_nonexisting, col_nonexisting] = ind2sub(n,nonexistingIdx(Toswap));
+        [row_nonexisting, col_nonexisting] = ind2sub([n n],nonexistingIdx(Toswap));
     end
 
         % Replace the existing edge with the non-existing edge
