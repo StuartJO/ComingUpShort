@@ -205,6 +205,8 @@ ANetStats4Eval = CalcNetStats4Eval(A,A_dist,A_vals);
 
 [~,Input.NNodes,m] = density_und(A); 
 
+n = Input.NNodes;
+
 nPossEdges = ((Input.NNodes^2-Input.NNodes)/2);
 
 [maxKS,KS,P,b,DegCorr,Input] = VoronoinLandScape_GNM(A_vals,A_dist,PDMs,m,Input);
@@ -364,8 +366,8 @@ MdlOutput.BestFit.maxKS.b = optim_b;
 MdlOutput.BestFit.maxKS.DegCorr = optim_DegCorr;
 MdlOutput.BestFit.maxKS.P = P_optim;
 
-MdlOutput.BestFit.maxKS.meanProb = mean(optim_meanProb);
-MdlOutput.BestFit.maxKS.medianProb = mean(optim_medianProb);
+MdlOutput.BestFit.maxKS.meanProb = mean(optim_meanProb,1);
+MdlOutput.BestFit.maxKS.medianProb = mean(optim_medianProb,1);
 
 MdlOutput.BestFit.DegCorr.maxKS = bestDegCorr_maxKS;
 MdlOutput.BestFit.DegCorr.KS = bestDegCorr_KS;

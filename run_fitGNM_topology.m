@@ -16,6 +16,9 @@ Input.ndraw = 2000;
 Input.pow = 2;
 Input.nlvl = 5;
 
+Input.GenFromBest = 100;
+Input.normType = 'max';
+
 PDMs{1} = A_dist;
 Input.PDMfunc{1} = 'exponential';
 

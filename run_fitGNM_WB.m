@@ -26,6 +26,7 @@ Input.ndraw = 2000;
 Input.pow = 2;
 Input.nlvl = 5;
 
+Input.GenFromBest = 100;
 Input.normType = 'max';
 
 for k = ADDMULT
