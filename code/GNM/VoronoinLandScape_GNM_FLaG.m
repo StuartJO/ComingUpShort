@@ -1,4 +1,4 @@
-function [maxKS,KS,P,b,DegCorr,Input,bvals] = VoronoinLandScape_GNMFLaG(adjs,A_dist,PDMs,m,Input)
+function [maxKS,KS,P,b,DegCorr,Input,bvals] = VoronoinLandScape_GNM_FLaG(adjs,A_dist,PDMs,m,Input)
 
 % This function will perform optimisation using a Voronoi tessellation
 % approach, where from an initial set of random points in parameter space,
@@ -100,8 +100,6 @@ function [maxKS,KS,P,b,DegCorr,Input,bvals] = VoronoinLandScape_GNMFLaG(adjs,A_d
 AddMult = Input.AddMult;
 
 PDMfunc = Input.PDMfunc;
-
-Timing = Input.Timing;
 
 if ~isfield(Input,'epsilon')
     % switch Input.AddMult

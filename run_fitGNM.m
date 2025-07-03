@@ -120,7 +120,7 @@ for i = MDL
 
     n = length(PDMs);
     
-    disp(['Running model GNM_',num2str(l),'_Mdl',num2str(i),'_',AddMult,'_',Input.PDMfunc{1}])  
+    disp(['Running model GNM_Mdl',num2str(i),'_',AddMult,'_',Input.PDMfunc{1}])  
     
     Output = fitGNM(adjs{1},A_dist,PDMs,Input);
     Output.PDMs = PDMs;

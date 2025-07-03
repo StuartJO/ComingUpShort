@@ -58,7 +58,7 @@ figure
     xlabel_name = 'Degree correlation';
     ylabel_name = 'max({\itKS})';
     elseif j == 3
-    y = maxKS;
+    y = DegCorr;
     x = squeeze(R(:,:,1,1));
     xlabel_name = 'Connection recovery ({\itR})';
     ylabel_name = 'Degree correlation';

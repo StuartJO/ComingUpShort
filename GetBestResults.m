@@ -3,7 +3,7 @@ FitTypes = {'maxKS','DegCorr'};
 for f = 1:length(FitTypes)
     FitType = FitTypes{f};
 
-    for MdlTypes = 1:3 
+    for MdlTypes = 2
     
             if MdlTypes == 1
                     Mdl_names = {'Spatial','Gene coexpression','Receptor similarity','Laminar similarity','Metabolic connectivity','Haemodynamic connectivity','Electrophysiological connectivity','Temporal similarity','Random similarity','Matching'};
@@ -19,7 +19,7 @@ for f = 1:length(FitTypes)
                     save_name_prefix = './data/compiled_outputs/BestMdls_TopoMdl_GNM';
                 elseif MdlTypes == 3
                     Mdl_names = {'Spatial','Gene coexpression','Receptor similarity','Laminar similarity','Metabolic connectivity','Haemodynamic connectivity','Electrophysiological connectivity','Temporal similarity','Random similarity','Matching'};
-                    mdls = 1:0;
+                    mdls = 1:10;
                     MdlForms = {'Add'};
                     Exponents = {'exponential'};
                     save_name_prefix = './data/compiled_outputs/BestMdls_WB_GNM';
@@ -81,13 +81,13 @@ for f = 1:length(FitTypes)
                 
                     if MdlTypes == 1
                     if mdl == 10
-                        Output = load(['./data/raw_output/GNM_TopoMdl',num2str(2),'_',mdlform,'_',expo,'.mat']);
+                        Output = load(['./data/raw_output/GNM_TopoMdl_',num2str(2),'_',mdlform,'_',expo,'.mat']);
                     else
                         Output = load(['./data/raw_output/GNM_Mdl',num2str(mdl),'_',mdlform,'_',expo,'.mat']);
                     end
                     elseif MdlTypes == 2
         
-                        Output = load(['./data/raw_output/GNM_TopoMdl',num2str(mdl),'_',mdlform,'_',expo,'.mat']);
+                        Output = load(['./data/raw_output/GNM_TopoMdl_',num2str(mdl),'_',mdlform,'_',expo,'.mat']);
                         mdlname = Output.Input.TopoType;
                         Mdl_names{mdlIND} = mdlname;
         

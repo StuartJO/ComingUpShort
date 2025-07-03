@@ -363,6 +363,7 @@ switch modeltype
     TopoData.k = k;
 	TopoData.Fk = Fk;
 	TopoData.c = c;
+    TopoData.A = A;
 
     %%
 

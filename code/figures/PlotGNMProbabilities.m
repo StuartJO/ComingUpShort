@@ -97,7 +97,8 @@ FigureOutputLocs{2,i} = ['./figures/',SAVEDIR,'/MedianProbMdl_',num2str(i),'.png
 print(FigureOutputLocs{2,i},'-dpng','-r300')
 end
 
-sky_cmap = [sky(length(ptiles)-1); 0 0 0];
+sky_cmap_ = sky(length(ptiles)); 
+sky_cmap = [sky_cmap_(2:length(ptiles),:); 0 0 0];
 figure('Position',[1 1 1382 747])
 for i = 1:NMdls
     %subplot(2,5,i)
@@ -127,3 +128,6 @@ print(FigureOutputLocs{3,i},'-dpng','-r300')
 
 end
 close all
+
+TopProb25 = squeeze(TopProb(:,3,:));
+ExpecProb = squeeze(TopProb(:,5,:));

@@ -3,8 +3,6 @@ addpath(genpath('./'))
 
 mdldata = load('Hansen_networks.mat');
 
-load('Scha7_400_COGs.mat')
-
 A_dist = mdldata.A_dist;
 
 adjs = mdldata.adj;

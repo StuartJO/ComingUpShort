@@ -281,7 +281,7 @@ A = adjs{j};
     if SpeedUp == 0
         bNetStats4Eval = CalcNetStats4Eval(B,A_dist,bvals{i,j});
     end
-[~,EdgeOverlap,MdlOutput.TND(i,j),MdlOutput.maxRMSE(i,j),MdlOutput.rd(i,j),MdlOutput.TFdiff(i,j),MdlOutput.TFdiffnc(i,j)] = CalcEvalStats(A,B,ANetStats4Eval{j},bNetStats4Eval,1);
+[~,EdgeOverlap,MdlOutput.TND(i,j),MdlOutput.maxRMSE(i,j),MdlOutput.maxRd(i,j),MdlOutput.TFdiff(i,j),MdlOutput.TFdiffnc(i,j)] = CalcEvalStats(A,B,ANetStats4Eval{j},bNetStats4Eval,1);
 MdlOutput.EdgeOverlap(i,j,:) = EdgeOverlap;
 end
 

@@ -67,13 +67,16 @@ ylabel(Ylbl)
 xlabel(Xlbl)
 
 set(gca,'FontSize',16)
+
+set(gca,'YScale',Yscale)
+
 xlim([x_min x_max])
 xlimits = xlim;
 ylimits = ylim;
 
 set(gca, 'LineWidth',2)
 
-set(gca,'YScale',Yscale)
+
 %set(gca, 'YMinorTick','off')
 
 NewYPos=mainPlot.Position(2);
@@ -130,13 +133,15 @@ for s = 1:NGrps
     %plot(xout,denOUT/bins*range,'Color',grouping_colors(s,:),'LineWidth',2)
 end
 
-xlim(xlimits)
+
 ylabel('Proportion')
 set(gca,'FontSize',16)
 pos = get(gca,'Position');
 set(gca,'Position',[pos(1) 0.8350 pos(3) pos(4)])
 set(gca,'XAxisLocation','top')
 set(gca, 'LineWidth',2)
+
+xlim(xlimits)
 
 %s_top.Position(2) = 0.74+YPosDiff;
 
@@ -164,7 +169,7 @@ for s = 1:NGrps
     %plot(denOUT/bins*range,yout,'Color',grouping_colors(s,:),'LineWidth',2)
 end
 
-ylim(ylimits)
+
 
 xlabel('Proportion')
 set(gca,'FontSize',16)
@@ -173,6 +178,8 @@ set(gca,'YAxisLocation','right')
 set(gca,'YScale',Yscale)
 
 %set(gca, 'YMinorTick','off')
+
+ylim(ylimits)
 
 set(gca, 'LineWidth',2)
 

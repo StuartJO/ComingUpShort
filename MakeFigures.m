@@ -62,16 +62,17 @@ system([ImgMagLoc,' montage ',FIGURES2ADD,' -tile 1x4 -geometry +0+0 ./figures/F
 
 close all
 
+%% Plot probabilities
 
-PlotLabels = {'A','B','C','D','E','F','G','A','H','I';'A','B','C','D','E','F','G','C','H','I';'A','B','C','D','E','F','G','B','H','I'};
+PlotLabels = {'A','B','C','D','E','F','G','H','I','A';'A','B','C','D','E','F','G','H','I','C';'A','B','C','D','E','F','G','H','I','B'};
 FigureOutputLocs = PlotGNMProbabilities('BestMdls_GNM_maxKS_Add_exponential.mat',PlotLabels);
-FIGURES2ADD = [FigureOutputLocs{1,8},' ',FigureOutputLocs{3,8}];
+FIGURES2ADD = [FigureOutputLocs{1,10},' ',FigureOutputLocs{3,10}];
 system([ImgMagLoc,' montage ',FIGURES2ADD,' -tile 2x1 -geometry +0+0 ./figures/Figure4.png']);
 
-FIGURES2ADD = [FigureOutputLocs{1,1},' ',FigureOutputLocs{1,2},' ',FigureOutputLocs{1,3},' ',FigureOutputLocs{1,4},' ',FigureOutputLocs{1,5},' ',FigureOutputLocs{1,6},' ',FigureOutputLocs{1,7},' ',FigureOutputLocs{1,9},' ',FigureOutputLocs{1,10}];
+FIGURES2ADD = [FigureOutputLocs{1,1},' ',FigureOutputLocs{1,2},' ',FigureOutputLocs{1,3},' ',FigureOutputLocs{1,4},' ',FigureOutputLocs{1,5},' ',FigureOutputLocs{1,6},' ',FigureOutputLocs{1,7},' ',FigureOutputLocs{1,8},' ',FigureOutputLocs{1,9}];
 system([ImgMagLoc,' montage ',FIGURES2ADD,' -tile 3x3 -geometry +0+0 ./figures/FigureS11.png']);
 
-FIGURES2ADD = [FigureOutputLocs{3,1},' ',FigureOutputLocs{3,2},' ',FigureOutputLocs{3,3},' ',FigureOutputLocs{3,4},' ',FigureOutputLocs{3,5},' ',FigureOutputLocs{3,6},' ',FigureOutputLocs{3,7},' ',FigureOutputLocs{3,9},' ',FigureOutputLocs{3,10}];
+FIGURES2ADD = [FigureOutputLocs{3,1},' ',FigureOutputLocs{3,2},' ',FigureOutputLocs{3,3},' ',FigureOutputLocs{3,4},' ',FigureOutputLocs{3,5},' ',FigureOutputLocs{3,6},' ',FigureOutputLocs{3,7},' ',FigureOutputLocs{3,8},' ',FigureOutputLocs{3,9}];
 system([ImgMagLoc,' montage ',FIGURES2ADD,' -tile 3x3 -geometry +0+0 ./figures/FigureS12.png']);
 
 PlotLabels = {'A','B','C','D','E','F','G','H','I','J';'A','B','C','D','E','F','G','H','I','J';'A','B','C','D','E','F','G','H','I','J'};

@@ -1,9 +1,12 @@
 
+% MdlBestFitAll = For the networks that achieved the best fit for each
+% individual, how similar is that network to all other individuals
+
 %Nsub = 972;
 MdlBestFitIndv = zeros(10,7,7,972);
 MdlBestFitAll = cell(10,7);
 for i = 1:10
-MdlData = load(['./outputs/EmpFLaG_Mdl',num2str(i),'_Add_exponential.mat'],'maxKS','maxRMSE','maxRd','TND','TFdiff','TFdiffnc','DegCorr','EdgeOverlap');
+MdlData = load(['./data/raw_output/EmpFLaG_Mdl',num2str(i),'_Add_exponential.mat'],'maxKS','maxRMSE','maxRd','TND','TFdiff','TFdiffnc','DegCorr','EdgeOverlap');
 FIT{1} = MdlData.maxKS;
 FIT{2} = MdlData.maxRMSE;
 FIT{3} = MdlData.maxRd;
@@ -34,8 +37,7 @@ end
 
 FitName = {'max(\itKS\rm)','max(\itRMSE\rm)','max(\itr_d\rm )','\itTND','\itTF_{diff }','Degree correlation','Connection overlap (Jaccard)'};
 
-%EmpFitInput = load('.\outputs\Scha400_7_lh_TopoMeasures_Thr70.mat');
-EmpFitInput = load('.\outputs\Schaefer_7net_iFOD2_acpc_lh_str70Thr_fitMetrics.mat');
+EmpFitInput = load('.\data\EmpiricalSimilarity\Schaefer_7net_iFOD2_acpc_lh_str70Thr_fitMetrics.mat');
 
 sub2use = [1:298 300:973];
 
@@ -49,4 +51,4 @@ EmpFit(:,7) = triu2vec(EmpFitInput.EdgeJaccard(sub2use,sub2use,4),1);
 
 Mdl_names = {'Spatial','Gene coexpression','Receptor similarity','Laminar similarity','Metabolic connectivity','Haemodynamic connectivity','Electrophysiological connectivity','Temporal similarity','Random similarity','Matching'};
 
-save('./compiled_outputs/GNM_FLaG_BestResults.mat','EmpFit','MdlBestFitIndv','FitName','Mdl_names','MdlBestFitAll','-v7.3')
+save('./data/compiled_outputs/GNM_FLaG_BestResults.mat','EmpFit','MdlBestFitIndv','FitName','Mdl_names','MdlBestFitAll','-v7.3')
