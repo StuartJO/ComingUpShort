@@ -39,7 +39,7 @@ system([ImgMagLoc,' montage ',FIGURES2ADD,' -tile 1x5 -geometry +0+0 ./figures/F
 
 close all
 
-GNMDegCorr{1} = PlotGNMPerformance('BestMdls_GNM_DegCorr_Add_exponential.mat',{'A','B','C','A','A'});
+[GNMDegCorr{1},LgdLocTopo] = PlotGNMPerformance('BestMdls_GNM_DegCorr_Add_exponential.mat',{'A','B','C','A','A'});
 GNMDegCorr{2} = PlotGNMPerformance('BestMdls_GNM_DegCorr_Add_powerlaw.mat',{'D','E','F','B','B'});
 GNMDegCorr{3} = PlotGNMPerformance('BestMdls_GNM_DegCorr_Mult_exponential.mat',{'G','H','I','C','C'});
 GNMDegCorr{4} = PlotGNMPerformance('BestMdls_GNM_DegCorr_Mult_powerlaw.mat',{'J','K','L','D','D'});

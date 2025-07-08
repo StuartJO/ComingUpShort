@@ -14,7 +14,6 @@
 MDL=$1
 ADDMULT=0
 LAW=0
-TIMING=0
 
 module load matlab/r2023b
 

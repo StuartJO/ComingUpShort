@@ -9,7 +9,7 @@ Requirements:
 
 [MATLAB R2023b](https://au.mathworks.com/products/new_products/release2023b.html)
 
-[ImageMagick](https://imagemagick.org/index.php)(not required per se, but to make all the combined plots it is very much needed) 
+[ImageMagick](https://imagemagick.org/index.php) (not required per se, but to make all the combined plots it is very much needed) 
 
 [plotSurfaceROIBoundary](https://github.com/StuartJO/plotSurfaceROIBoundary) (only for making the plots of degrees spatial embedding)
 
