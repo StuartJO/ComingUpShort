@@ -120,6 +120,20 @@ InRange(i,j) = sum(Isin_range) / numel(vec) * 100;
 end
 end
 
+ [~,ord] = sort(InRange(:,1),'descend');
+
+ disp('Best maxKS overlap for FLaG results')
+
+ for i = 1:3
+     I = ord(i);
+disp([Mdl_names{I},': maxKS overlap=',num2str(InRange(I,1))])
+ end
+
+disp(['FLaG: maxKS range of bottom 7=',num2str(min(InRange(ord(4:end),1))),' to ',num2str(max(InRange(ord(4:end),1)))])
+
+disp(['FLaG: Edge Overlap range =',num2str(min(InRange(:,6))),' to ',num2str(max(InRange(:,6)))])
+disp(['FLaG: DegCorr range =',num2str(min(InRange(:,7))),' to ',num2str(max(InRange(:,7)))])
+
 %%
 
 EmpFitInput = load('.\data\EmpiricalSimilarity\Schaefer_7net_iFOD2_acpc_lh_str70Thr_fitMetrics.mat');
@@ -132,12 +146,12 @@ EmpOvlp(i,:) = triu2vec(EmpFitInput.EdgeJaccard(sub2use,sub2use,i),1);
 EmpDegCorr(i,:) = triu2vec(EmpFitInput.DegCorr(sub2use,sub2use,i),1);
 end
 
-disp(['Empirical maxKS range: ',num2str(min(maxKSEmpFit(:))),' to ',num2str(max(maxKSEmpFit(:)))])
+disp(['Empirical maxKS range: ',num2str(min(EmpmaxKS(:))),' to ',num2str(max(EmpmaxKS(:)))])
 
 disp(['Empirical overlap range: ',num2str(min(EmpOvlp(:))),' to ',num2str(max(EmpOvlp(:)))])
 
 for i = 1:10
-disp(['Schaefer',num2str(i*100),' maxKS M=',num2str(mean(maxKSEmpFit(i,:))),': SD=',num2str(std(maxKSEmpFit(i,:)))])
+disp(['Schaefer',num2str(i*100),' maxKS M=',num2str(mean(EmpmaxKS(i,:))),': SD=',num2str(std(EmpmaxKS(i,:)))])
 end
 
 for i = 1:10
